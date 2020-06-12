@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SimpleCar.Input
 {
@@ -11,14 +6,24 @@ namespace SimpleCar.Input
     {
         #region Editor Settings
 
+        [Header("Axes")]
         [SerializeField] private string motorAxisName;
         [SerializeField] private string steeringAxisName;
+        [SerializeField] private string brakeAxisName;
+
+        [Header("Buttons")]
+        [SerializeField] private string shiftUpName;
+        [SerializeField] private string shiftDownName;
+        [SerializeField] private string clutchName;
 
         #endregion
         #region Public Properties
 
-        public float Motor { get; set; }
-        public float Steering { get; set; }
+        public float Gas { get; private set; }
+        public float Steering { get; private set; }
+        public int Shift { get; private set; }
+        public float Brake { get; private set; }
+        public bool Clutch { get; private set; }
 
         #endregion
 
@@ -26,8 +31,27 @@ namespace SimpleCar.Input
 
         private void Update()
         {
-            Motor = UnityEngine.Input.GetAxis(motorAxisName);
+            Gas = UnityEngine.Input.GetAxis(motorAxisName);
             Steering = UnityEngine.Input.GetAxis(steeringAxisName);
+            Brake = UnityEngine.Input.GetAxis(brakeAxisName);
+
+            Clutch = UnityEngine.Input.GetButton(clutchName);
+            RefreshShift();
+        }
+        private void RefreshShift()
+        {
+            if (UnityEngine.Input.GetButtonDown(shiftUpName))
+            {
+                Shift = 1;
+            }
+            else if (UnityEngine.Input.GetButtonDown(shiftDownName))
+            {
+                Shift = -1;
+            }
+            else
+            {
+                Shift = 0;
+            }
         }
 
         #endregion
