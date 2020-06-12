@@ -3977,14 +3977,38 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2047422670}
+    - target: {fileID: 307485109575751211, guid: f787478fc126b48429c47216223c03f8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2001169c727b3a542a3b1b11c7c0dfa1, type: 2}
     - target: {fileID: 1146436711093193034, guid: f787478fc126b48429c47216223c03f8, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 928323657}
+    - target: {fileID: 2807119282231678634, guid: f787478fc126b48429c47216223c03f8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2001169c727b3a542a3b1b11c7c0dfa1, type: 2}
+    - target: {fileID: 3232740576030609143, guid: f787478fc126b48429c47216223c03f8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2001169c727b3a542a3b1b11c7c0dfa1, type: 2}
     - target: {fileID: 3263869167174357450, guid: f787478fc126b48429c47216223c03f8, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1583656575}
+    - target: {fileID: 3708096925279224547, guid: f787478fc126b48429c47216223c03f8, type: 3}
+      propertyPath: steeringWheelMaxRotation
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6834935977519734480, guid: f787478fc126b48429c47216223c03f8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2001169c727b3a542a3b1b11c7c0dfa1, type: 2}
+    - target: {fileID: 7682601091941931793, guid: f787478fc126b48429c47216223c03f8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2001169c727b3a542a3b1b11c7c0dfa1, type: 2}
     - target: {fileID: 8224981511328362716, guid: f787478fc126b48429c47216223c03f8, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -3993,6 +4017,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1500684667}
+    - target: {fileID: 8804121120120106395, guid: f787478fc126b48429c47216223c03f8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d2429ef2cf9cffd4e85ac17841b9af19, type: 2}
     - target: {fileID: 9178361404707662072, guid: f787478fc126b48429c47216223c03f8, type: 3}
       propertyPath: m_Name
       value: Car
@@ -4049,5 +4077,9 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2126898623}
+    - target: {fileID: 9178361405418398239, guid: f787478fc126b48429c47216223c03f8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d2429ef2cf9cffd4e85ac17841b9af19, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f787478fc126b48429c47216223c03f8, type: 3}
