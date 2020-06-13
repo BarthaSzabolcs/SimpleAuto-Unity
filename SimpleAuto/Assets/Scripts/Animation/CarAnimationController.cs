@@ -1,4 +1,5 @@
-﻿using SimpleCar.Control;
+﻿using Animation.Avatar;
+using SimpleCar.Control;
 using UnityEngine;
 
 namespace SimpleCar.Animation
@@ -8,10 +9,13 @@ namespace SimpleCar.Animation
         #region Editor Settings
 
         [SerializeField] private CarWheelAnimator[] wheels;
+        [SerializeField] private AvatarAnimationController avatar;
 
         [Header("Steeringwheel")]
         [SerializeField] private Transform steeringWheel;
         [SerializeField] private float steeringWheelMaxRotation;
+        [SerializeField] private Transform steeringWheeIKLeft;
+        [SerializeField] private Transform steeringWheeIKRight;
 
         [Header("Gearbox")]
         [SerializeField] private Transform gearShift;
@@ -37,6 +41,8 @@ namespace SimpleCar.Animation
         private void Awake()
         {
             controller = transform.GetComponent<CarController>();
+            avatar.IKGoalLeftHand = steeringWheeIKLeft;
+            avatar.IKGoalRightHand = steeringWheeIKRight;
         }
 
         private void Update()
@@ -66,7 +72,7 @@ namespace SimpleCar.Animation
             var eulerAngles = steeringWheel.localEulerAngles;
             eulerAngles.z = -controller.Steering * steeringWheelMaxRotation;
 
-            steeringWheel.localEulerAngles = eulerAngles;  
+            steeringWheel.localEulerAngles = eulerAngles;
         }
 
         private void UpdateGearBox()
