@@ -14,9 +14,9 @@ namespace SimpleCar.Animation
         [SerializeField] private float steeringWheelMaxRotation;
 
         [Header("Gearbox")]
-        [SerializeField] private Transform gearKnob;
-        [SerializeField] private Vector3 gearShiftOffset;
-        [SerializeField] private Vector3 gearShiftCenter;
+        [SerializeField] private Transform gearShift;
+        [SerializeField] private float gearShiftAngleOffset;
+        [SerializeField] private float gearShiftBaseAngle;
 
         [Header("Pedals")]
         [SerializeField] private Transform clutchPedal;
@@ -68,9 +68,13 @@ namespace SimpleCar.Animation
 
             steeringWheel.localEulerAngles = eulerAngles;  
         }
+
         private void UpdateGearBox()
         {
-            gearKnob.localPosition = gearShiftCenter + gearShiftOffset * controller.Gear;
+            var eulerAngles = gearShift.localEulerAngles;
+            eulerAngles.x = gearShiftBaseAngle + controller.Gear * gearShiftAngleOffset;
+
+            gearShift.localEulerAngles = eulerAngles;
         }
 
         #endregion
@@ -78,18 +82,22 @@ namespace SimpleCar.Animation
 
         private void UpdatePedals()
         {
-            RotatePedal(clutchPedal, controller.Clutch);
-            RotatePedal(brakePedal, controller.Brake);
-            RotatePedal(gasPedal, controller.Gas);
+            SetPedalYaw(clutchPedal, controller.Clutch);
+            SetPedalYaw(brakePedal, controller.Brake);
+            SetPedalYaw(gasPedal, controller.Gas);
         }
-        private void RotatePedal(Transform pedal, float press)
+
+        #endregion
+        #region Helper
+
+        private void SetPedalYaw(Transform pedal, float press)
         {
             var eulerAngles = pedal.localEulerAngles;
             eulerAngles.x = press * pedalMaxRotation + pedalRotationOffset;
 
             pedal.localEulerAngles = eulerAngles;
         }
-
+        
         #endregion
     }
 }

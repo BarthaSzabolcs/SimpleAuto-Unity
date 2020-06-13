@@ -11,19 +11,30 @@ namespace SimpleCar.Input
         [SerializeField] private string steeringAxisName;
         [SerializeField] private string brakeAxisName;
 
+        [Header("Mouse")]
+        [SerializeField] private string mouseYAxisName;
+        [SerializeField] private string mouseXAxisName;
+        [SerializeField] private float mouseSenitivity;
+
         [Header("Buttons")]
         [SerializeField] private string shiftUpName;
         [SerializeField] private string shiftDownName;
         [SerializeField] private string clutchName;
+        [SerializeField] private string cameraButtonName;
 
         #endregion
         #region Public Properties
 
+        // Car
         public float Gas { get; private set; }
         public float Steering { get; private set; }
         public int Shift { get; private set; }
         public float Brake { get; private set; }
         public bool Clutch { get; private set; }
+        public bool ChangeCamera { get; private set; }
+
+        // Camera
+        public Vector2 MouseMovement { get; set; }
 
         #endregion
 
@@ -34,9 +45,15 @@ namespace SimpleCar.Input
             Gas = Mathf.Clamp(UnityEngine.Input.GetAxis(motorAxisName), 0, 1);
             Steering = UnityEngine.Input.GetAxis(steeringAxisName);
             Brake = UnityEngine.Input.GetAxis(brakeAxisName);
-
             Clutch = UnityEngine.Input.GetButton(clutchName);
             RefreshShift();
+
+            MouseMovement = new Vector2()
+            {
+                x = UnityEngine.Input.GetAxis(mouseXAxisName) * mouseSenitivity,
+                y = UnityEngine.Input.GetAxis(mouseYAxisName) * mouseSenitivity,
+            };
+            ChangeCamera = UnityEngine.Input.GetButtonDown(cameraButtonName);
         }
         private void RefreshShift()
         {
