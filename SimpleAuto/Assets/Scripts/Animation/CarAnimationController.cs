@@ -64,7 +64,7 @@ namespace SimpleCar.Animation
         private void UpdateSteeringWheel()
         {
             var eulerAngles = steeringWheel.localEulerAngles;
-            eulerAngles.z = controller.Steering * steeringWheelMaxRotation;
+            eulerAngles.z = -controller.Steering * steeringWheelMaxRotation;
 
             steeringWheel.localEulerAngles = eulerAngles;  
         }

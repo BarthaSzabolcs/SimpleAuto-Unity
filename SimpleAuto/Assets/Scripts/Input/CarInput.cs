@@ -31,7 +31,7 @@ namespace SimpleCar.Input
 
         private void Update()
         {
-            Gas = UnityEngine.Input.GetAxis(motorAxisName);
+            Gas = Mathf.Clamp(UnityEngine.Input.GetAxis(motorAxisName), 0, 1);
             Steering = UnityEngine.Input.GetAxis(steeringAxisName);
             Brake = UnityEngine.Input.GetAxis(brakeAxisName);
 
