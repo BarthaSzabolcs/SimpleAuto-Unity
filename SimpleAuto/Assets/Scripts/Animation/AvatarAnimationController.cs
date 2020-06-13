@@ -15,6 +15,7 @@ namespace Animation.Avatar
         #endregion
         #region Public Properties
 
+        public float Grab { get; set; }
         public Transform IKGoalLeftHand { get; set; }
         public Transform IKGoalRightHand { get; set; }
 
