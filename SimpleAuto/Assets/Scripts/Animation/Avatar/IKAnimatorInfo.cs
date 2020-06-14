@@ -54,22 +54,25 @@ namespace SimpleCar.Animation.Avatar
         #region Public Methods
 
         // ToDo - rename
-        public (Vector3 position, Quaternion rotation) NextValues()
+        public (Vector3 position, Quaternion rotation) NextValues(Transform referenceTransform)
         {
             if (previousGoal.HasValue)
             {
                 currentlerpValue += goalLerp * Time.deltaTime;
 
-                if (currentlerpValue >= 1)
+                if (currentlerpValue >= 1 && GoalReached == false)
                 {
-                    previousGoal = (Goal.position, Goal.rotation);
+                    var position = referenceTransform.InverseTransformPoint(Goal.position);
+                    previousGoal = (position, Goal.rotation);
                     GoalReached = true;
                     return (Goal.position, Goal.rotation);
                 }
                 else
                 {
-                    return (Vector3.Lerp(previousGoal.Value.position, Goal.position, currentlerpValue),
-                        Quaternion.Lerp(previousGoal.Value.rotation, Goal.rotation, currentlerpValue));
+                    var previousPosition = referenceTransform.TransformPoint(previousGoal.Value.position);
+
+                    return (Vector3.Lerp(previousPosition, Goal.position, currentlerpValue), Quaternion.identity
+                        /*Quaternion.Lerp(previousGoal.Value.rotation, Goal.rotation, currentlerpValue)*/);
                 }
             }
             else

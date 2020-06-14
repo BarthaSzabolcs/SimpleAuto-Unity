@@ -15,11 +15,10 @@ namespace SimpleCar.Animation.Avatar
         [Header("IKAnimators")]
         [SerializeField] private IKAnimator _leftHandIk;
         [SerializeField] private IKAnimator _rightHandIK;
+        [SerializeField] private IKAnimator _rightFootIk;
+        [SerializeField] private IKAnimator _leftFootIk;
 
-        [Header("Grab")]
-        [SerializeField] private AnimationCurve grabCurve;
-        [SerializeField] private Timer grabTimer;
-        [SerializeField] private float interpolationGain;
+        [SerializeField] private Transform carTransform;
 
         #endregion
         #region Public Properties
@@ -27,6 +26,8 @@ namespace SimpleCar.Animation.Avatar
         public float Grab { get; set; }
         public IKAnimator LeftHand => _leftHandIk;
         public IKAnimator RightHand => _rightHandIK;
+        public IKAnimator LeftFoot => _leftFootIk;
+        public IKAnimator RightFoot => _rightFootIk;
 
         #endregion
         #region Private Fields
@@ -42,22 +43,26 @@ namespace SimpleCar.Animation.Avatar
         {
             animator = GetComponent<Animator>();
             
-            LeftHand.Init(animator);
-            RightHand.Init(animator);
+            LeftHand.Init(animator, carTransform);
+            RightHand.Init(animator, carTransform);
+            LeftFoot.Init(animator, carTransform);
+            RightFoot.Init(animator, carTransform);
         }
 
         private void OnAnimatorIK(int layerIndex)
         {
             LeftHand.Update();
             RightHand.Update();
+            LeftFoot.Update();
+            RightFoot.Update();
         }
 
         #endregion
 
         
-        private void RefreshGrab()
-        {
-            animator.SetFloat(nameof(Grab), grabCurve.Evaluate(grabTimer.ElapsedPercentage));
-        }
+        //private void RefreshGrab()
+        //{
+        //    animator.SetFloat(nameof(Grab), grabCurve.Evaluate(grabTimer.ElapsedPercentage));
+        //}
     }
 }

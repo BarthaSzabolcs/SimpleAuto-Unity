@@ -30,6 +30,17 @@ namespace SimpleCar.Animation
         [SerializeField] private float pedalMaxRotation;
         [SerializeField] private float pedalRotationOffset;
 
+        [Header("IK Target Pairs")]
+        [SerializeField] private IKTargetPair rightHandTargets;
+        [SerializeField] private IKTargetPair leftFootTargets;
+        [SerializeField] private IKTargetPair rightFootTargets;
+
+        [Header("RightFoot Target")]
+        [SerializeField] private Vector3 gasLocalPosition;
+        [SerializeField] private Vector3 brakeLocalPosition;
+        [SerializeField] private Vector3 singlePedalRotation;
+        [SerializeField] private Vector3 dualPedalRotation;
+
         #endregion
         #region Private Fields
 
@@ -52,10 +63,7 @@ namespace SimpleCar.Animation
             UpdateSteeringWheel();
             UpdateGearBox();
             UpdatePedals();
-
-            avatar.RightHand.Info.Goal = controller.CanShift ?
-                gearShiftIK : steeringWheeIKRight;
-
+            UpdateIKs();
         }
 
         #endregion
@@ -96,6 +104,42 @@ namespace SimpleCar.Animation
             SetPedalYaw(clutchPedal, controller.Clutch);
             SetPedalYaw(brakePedal, controller.Brake);
             SetPedalYaw(gasPedal, controller.Gas);
+        }
+        
+        // ToDo - Refactor
+        private void UpdateIKs()
+        {
+            avatar.RightHand.Info.Goal = controller.CanShift ?
+                rightHandTargets.Active : rightHandTargets.Rest;
+
+            avatar.LeftFoot.Info.Goal = controller.Clutch > 0 ?
+                leftFootTargets.Active : leftFootTargets.Rest;
+
+            if (controller.Gas > 00.125f && controller.Brake > 0.0125f)
+            {
+                avatar.RightFoot.Info.Goal = rightFootTargets.Active;
+                avatar.RightFoot.Info.Goal.localEulerAngles = dualPedalRotation;
+                avatar.RightFoot.Info.Goal.localPosition = (brakeLocalPosition + gasLocalPosition) / 2;
+            }
+            else if(controller.Gas < 00.125f && controller.Brake < 0.0125f)
+            {
+                avatar.RightFoot.Info.Goal = rightFootTargets.Rest;
+            }
+            else
+            {
+                avatar.RightFoot.Info.Goal = rightFootTargets.Active;
+                avatar.RightFoot.Info.Goal.localEulerAngles = singlePedalRotation;
+
+                if (controller.Gas > controller.Brake)
+                {
+                    avatar.RightFoot.Info.Goal.localPosition = gasLocalPosition;
+                }
+                else
+                {
+                    avatar.RightFoot.Info.Goal.localPosition = brakeLocalPosition;
+                }
+            }
+
         }
 
         #endregion

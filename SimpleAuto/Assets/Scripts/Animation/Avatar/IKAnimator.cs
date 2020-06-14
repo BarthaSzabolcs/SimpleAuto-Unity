@@ -23,12 +23,13 @@ namespace SimpleCar.Animation.Avatar
         #region Private Fields
 
         private Animator animator;
-
+        private Transform reference;
         #endregion
 
-        public void Init(Animator animator)
+        public void Init(Animator animator, Transform reference)
         {
             this.animator = animator;
+            this.reference = reference;
         }
 
         public void Update()
@@ -41,7 +42,7 @@ namespace SimpleCar.Animation.Avatar
                 animator.SetIKPositionWeight(Info.Type, 1);
                 animator.SetIKRotationWeight(Info.Type, 1);
 
-                var (position, rotation) = Info.NextValues();
+                var (position, rotation) = Info.NextValues(reference);
                 animator.SetIKPosition(Info.Type, position);
                 animator.SetIKRotation(Info.Type, rotation);
             }
