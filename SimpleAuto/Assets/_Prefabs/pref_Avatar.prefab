@@ -12,6 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9c504ee49ba66a468bba973f8efdca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _leftHandIk:
+    _info:
+      _type: 2
+      bone: {fileID: 2326739583110551230}
+      movementSpeed: 10
+      maxClampDistance: 0.125
+  _rightHandIK:
+    _info:
+      _type: 3
+      bone: {fileID: 5886723524526898499}
+      movementSpeed: 1
+      maxClampDistance: 0.125
+  grabCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  grabTimer:
+    _interval: 0
+    _autoReset: 0
+    _clamp: 0
+  interpolationGain: 0
 --- !u!1001 &97730482209060655
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -100,5 +123,15 @@ PrefabInstance:
 --- !u!1 &980197620838386302 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 314df2ca2994af64194b3f8cbc154d89, type: 3}
+  m_PrefabInstance: {fileID: 97730482209060655}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2326739583110551230 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2382694516158718353, guid: 314df2ca2994af64194b3f8cbc154d89, type: 3}
+  m_PrefabInstance: {fileID: 97730482209060655}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5886723524526898499 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -3392650329189250452, guid: 314df2ca2994af64194b3f8cbc154d89, type: 3}
   m_PrefabInstance: {fileID: 97730482209060655}
   m_PrefabAsset: {fileID: 0}

@@ -21,6 +21,7 @@ namespace SimpleCar.Input
         [SerializeField] private string shiftDownName;
         [SerializeField] private string clutchName;
         [SerializeField] private string cameraButtonName;
+        [SerializeField] private string canShiftName;
 
         #endregion
         #region Public Properties
@@ -29,6 +30,7 @@ namespace SimpleCar.Input
         public float Gas { get; private set; }
         public float Steering { get; private set; }
         public int Shift { get; private set; }
+        public bool CanShift { get; set; }
         public float Brake { get; private set; }
         public bool Clutch { get; private set; }
         public bool ChangeCamera { get; private set; }
@@ -46,6 +48,7 @@ namespace SimpleCar.Input
             Steering = UnityEngine.Input.GetAxis(steeringAxisName);
             Brake = UnityEngine.Input.GetAxis(brakeAxisName);
             Clutch = UnityEngine.Input.GetButton(clutchName);
+            
             RefreshShift();
 
             MouseMovement = new Vector2()
@@ -57,7 +60,12 @@ namespace SimpleCar.Input
         }
         private void RefreshShift()
         {
-            if (UnityEngine.Input.GetButtonDown(shiftUpName))
+            if (UnityEngine.Input.GetButtonDown(canShiftName))
+            {
+                CanShift = !CanShift;
+            }
+
+            if (CanShift && UnityEngine.Input.GetButtonDown(shiftUpName))
             {
                 Shift = 1;
             }

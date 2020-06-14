@@ -7,7 +7,7 @@ using SimpleCar.Input;
 using UnityEngine;
 using Utility;
 
-namespace Control.Camera
+namespace SimpleCar.Control.Camera
 {
     public class CameraController : MonoBehaviour
     {

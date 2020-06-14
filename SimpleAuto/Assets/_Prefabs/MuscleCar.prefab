@@ -106,8 +106,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1185448948899872870}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.185, y: 0.067, z: -0.065}
+  m_LocalRotation: {x: 0.022415975, y: 0.02792209, z: -0.47288477, w: 0.8803964}
+  m_LocalPosition: {x: 0.1986, y: 0.067, z: -0.065}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4888593445802593324}
@@ -200,8 +200,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2436211733690998108}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.185, y: 0.067, z: -0.065}
+  m_LocalRotation: {x: 0.035658266, y: -0.00323617, z: 0.47207126, w: 0.88083297}
+  m_LocalPosition: {x: -0.1986, y: 0.067, z: -0.065}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4888593445802593324}
@@ -588,6 +588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03fbd3b069e505f44be10ce0828b92db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testKey: 0
   wheels:
   - collider: {fileID: 151854813095939821}
     transform: {fileID: 0}
@@ -603,6 +604,7 @@ MonoBehaviour:
   steeringWheeIKLeft: {fileID: 4535585620129054047}
   steeringWheeIKRight: {fileID: 8742449207007457995}
   gearShift: {fileID: 5785825578337904051}
+  gearShiftIK: {fileID: 0}
   gearShiftAngleOffset: 25
   gearShiftBaseAngle: 0
   clutchPedal: {fileID: 7382613989211039621}
@@ -1258,7 +1260,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 047b9ec451d32a544b48a7eddb2b5bc8, type: 3}
       propertyPath: m_Name
-      value: Body
+      value: MuscleCar
       objectReference: {fileID: 0}
     - target: {fileID: 5162820104835090806, guid: 047b9ec451d32a544b48a7eddb2b5bc8, type: 3}
       propertyPath: m_IsActive
@@ -1613,6 +1615,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5186323453695953220}
     m_Modifications:
+    - target: {fileID: -621505733943806071, guid: 7372f62359b54fa49862681f2859a744, type: 3}
+      propertyPath: _leftHandIk._info._type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -621505733943806071, guid: 7372f62359b54fa49862681f2859a744, type: 3}
+      propertyPath: _leftHandIk._info.movementSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -621505733943806071, guid: 7372f62359b54fa49862681f2859a744, type: 3}
+      propertyPath: _rightHandIK._info.movementSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -621505733943806071, guid: 7372f62359b54fa49862681f2859a744, type: 3}
+      propertyPath: _rightHandIK._info._type
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 355634173355253153, guid: 7372f62359b54fa49862681f2859a744, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.4626046

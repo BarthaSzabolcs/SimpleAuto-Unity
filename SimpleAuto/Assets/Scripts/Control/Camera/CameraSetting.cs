@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Utility;
 
-namespace Control.Camera
+namespace SimpleCar.Control.Camera
 {
     [Serializable]
     public struct CameraSetting

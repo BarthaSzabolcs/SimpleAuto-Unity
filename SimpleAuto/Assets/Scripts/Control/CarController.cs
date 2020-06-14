@@ -26,6 +26,7 @@ namespace SimpleCar.Control
         public float Clutch { get; private set; }
         public float Brake { get; private set; }
         public float Gas { get; private set; }
+        public bool CanShift { get; private set; }
         public int Gear 
         {
             get => _gear;
@@ -72,8 +73,9 @@ namespace SimpleCar.Control
             Gas = input.Gas;
             Steering = input.Steering;
             Clutch = input.Clutch ? 1f : 0;
+            CanShift = input.CanShift;
 
-            if (input.Clutch)
+            if (CanShift && input.Clutch)
             {
                 Gear += input.Shift;
             }

@@ -1,4 +1,4 @@
-﻿using Animation.Avatar;
+﻿using SimpleCar.Animation.Avatar;
 using SimpleCar.Control;
 using UnityEngine;
 
@@ -19,6 +19,7 @@ namespace SimpleCar.Animation
 
         [Header("Gearbox")]
         [SerializeField] private Transform gearShift;
+        [SerializeField] private Transform gearShiftIK;
         [SerializeField] private float gearShiftAngleOffset;
         [SerializeField] private float gearShiftBaseAngle;
 
@@ -41,8 +42,8 @@ namespace SimpleCar.Animation
         private void Awake()
         {
             controller = transform.GetComponent<CarController>();
-            avatar.IKGoalLeftHand = steeringWheeIKLeft;
-            avatar.IKGoalRightHand = steeringWheeIKRight;
+            avatar.LeftHand.Info.Goal = steeringWheeIKLeft;
+            avatar.RightHand.Info.Goal = steeringWheeIKRight;
         }
 
         private void Update()
@@ -51,6 +52,10 @@ namespace SimpleCar.Animation
             UpdateSteeringWheel();
             UpdateGearBox();
             UpdatePedals();
+
+            avatar.RightHand.Info.Goal = controller.CanShift ?
+                gearShiftIK : steeringWheeIKRight;
+
         }
 
         #endregion
