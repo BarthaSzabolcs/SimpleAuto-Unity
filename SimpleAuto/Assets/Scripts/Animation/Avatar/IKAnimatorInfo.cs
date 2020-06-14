@@ -13,7 +13,11 @@ namespace SimpleCar.Animation.Avatar
         #region Editor Settings
 
         [SerializeField] private AvatarIKGoal _type;
-        [SerializeField] private float goalLerp;
+        [SerializeField] private Transform boneTransform;
+
+        [Header("Lerp")]
+        [SerializeField] private float lerpSpeed;
+        [SerializeField] private float attachDistance;
 
         #endregion
         #region Public Properties
@@ -24,16 +28,35 @@ namespace SimpleCar.Animation.Avatar
             get => _goal; 
             set
             {
-                if (_goal != value && _goal != null)
+                if (_goal == null)
                 {
-                    previousGoal = (_goal.position, _goal.rotation);
-                    currentlerpValue = 0;
-                    GoalReached = false;
+                    previousGoal = (transform.TransformPoint(boneTransform.position), boneTransform.rotation);
+                    
+                    Attached = false;
                 }
+                else if (_goal != value && value != null)
+                {
+                    if (Attached == false)
+                    {
+                        previousGoal = CalculatePreviousGoalMidTransition();
+                    }
+                    else
+                    {
+                        previousGoal = CalculatePreviousGoalPostTransition(_goal);
+                    }
+
+                    Attached = false;
+                }
+
+                if (_goal != value && value != null && Attached == false )
+                {
+                    lerpMultiplier = CalculateLerpParameters(transform.TransformPoint(previousGoal.Value.position), value.position);
+                }
+
                 _goal = value;
             }
         }
-        public bool GoalReached { get; private set; }
+        public bool Attached { get; set; }
         public Vector3 CurrentPosition { get; set; }
         public Quaternion CurrentRotation { get; set; }
 
@@ -41,44 +64,95 @@ namespace SimpleCar.Animation.Avatar
         #region Backing Fields
 
         private Transform _goal;
-        private bool _goalReached;
 
         #endregion
         #region Private Fields
 
+        private Transform transform;
         private (Vector3 position, Quaternion rotation)? previousGoal = new (Vector3, Quaternion)?();
+        
+        // Lerp
         private float currentlerpValue;
+        private float lerpMultiplier;
 
         #endregion
 
+
         #region Public Methods
 
-        // ToDo - rename
-        public (Vector3 position, Quaternion rotation) NextValues(Transform referenceTransform)
+        public void Init(Transform centerTransform)
         {
-            if (previousGoal.HasValue)
-            {
-                currentlerpValue += goalLerp * Time.deltaTime;
+            this.transform = centerTransform;
+        }
 
-                if (currentlerpValue >= 1 && GoalReached == false)
+        public (Vector3 position, Quaternion rotation) Transition()
+        {
+            if (Goal.name == "IK_SteeringWheel_Right")
+            {
+                int asd = 0;
+            }
+
+            if (Attached)
+            {
+                return (Goal.position, Goal.rotation);
+            }
+            else
+            {
+                currentlerpValue += (lerpSpeed / lerpMultiplier) * Time.deltaTime/* (1 / Time.deltaTime)*/;
+
+                var translation = CurrentTranslation();
+                var distanceFromGoal = Mathf.Abs(Vector3.Distance(translation.position, Goal.position));
+
+                if (currentlerpValue >= 1 || distanceFromGoal < attachDistance)
                 {
-                    var position = referenceTransform.InverseTransformPoint(Goal.position);
-                    previousGoal = (position, Goal.rotation);
-                    GoalReached = true;
+                    Attached = true;
                     return (Goal.position, Goal.rotation);
                 }
                 else
                 {
-                    var previousPosition = referenceTransform.TransformPoint(previousGoal.Value.position);
-
-                    return (Vector3.Lerp(previousPosition, Goal.position, currentlerpValue), Quaternion.identity
-                        /*Quaternion.Lerp(previousGoal.Value.rotation, Goal.rotation, currentlerpValue)*/);
+                    return translation;
                 }
             }
-            else
-            {
-                return (Goal.position, Goal.rotation);
-            }
+        }
+
+        public void Deattach()
+        {
+            Attached = false;
+        }
+
+        #endregion
+        #region Private Methods
+
+        private (Vector3 position, Quaternion rotation) CurrentTranslation()
+        {
+            var previousPosition = transform.TransformPoint(previousGoal.Value.position);
+            // var previousRotation = Quaternion.Inverse(centerTransform.rotation) * previousGoal.Value.rotation;
+            // var previousRotation = centerTransform.rotation * previousGoal.Value.rotation;
+
+            var nextPosition = Vector3.Lerp(previousPosition, Goal.position, currentlerpValue);
+            //var nextRotation = Quaternion.Lerp(previousRotation, Goal.rotation, currentlerpValue);
+
+            return (nextPosition, Goal.rotation/*nextRotation*/);
+        }
+
+        private float CalculateLerpParameters(Vector3 from, Vector3 to)
+        {
+            currentlerpValue = 0;
+            return Mathf.Abs(Vector3.Distance(from, to));
+        }
+        
+
+        private (Vector3 position, Quaternion rotation) CalculatePreviousGoalMidTransition()
+        {
+            var (position, rotation) = CurrentTranslation();
+            position = transform.InverseTransformPoint(position);
+
+            return (position, rotation);
+        }
+        private (Vector3 position, Quaternion rotation) CalculatePreviousGoalPostTransition(Transform goal)
+        {
+            var position = transform.InverseTransformPoint(goal.position);
+            return (position, goal.rotation);
         }
 
         #endregion

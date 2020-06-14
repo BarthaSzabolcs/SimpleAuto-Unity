@@ -50,7 +50,7 @@ namespace SimpleCar.Animation
 
         #region Unity Callbacks
 
-        private void Awake()
+        private void Start()
         {
             controller = transform.GetComponent<CarController>();
             avatar.LeftHand.Info.Goal = steeringWheeIKLeft;
@@ -79,7 +79,7 @@ namespace SimpleCar.Animation
         }
 
         #endregion
-        #region Dashboard
+        #region Cockpit
         private void UpdateSteeringWheel()
         {
             var eulerAngles = steeringWheel.localEulerAngles;
@@ -96,16 +96,12 @@ namespace SimpleCar.Animation
             gearShift.localEulerAngles = eulerAngles;
         }
 
-        #endregion
-        #region Pedals
-
         private void UpdatePedals()
         {
             SetPedalYaw(clutchPedal, controller.Clutch);
             SetPedalYaw(brakePedal, controller.Brake);
             SetPedalYaw(gasPedal, controller.Gas);
-        }
-        
+        }        
         // ToDo - Refactor
         private void UpdateIKs()
         {
@@ -115,21 +111,25 @@ namespace SimpleCar.Animation
             avatar.LeftFoot.Info.Goal = controller.Clutch > 0 ?
                 leftFootTargets.Active : leftFootTargets.Rest;
 
-            if (controller.Gas > 00.125f && controller.Brake > 0.0125f)
+            if (controller.Gas > 0.0125f && controller.Brake > 0.0125f)
             {
+                // If both of the pedals are down.
                 avatar.RightFoot.Info.Goal = rightFootTargets.Active;
                 avatar.RightFoot.Info.Goal.localEulerAngles = dualPedalRotation;
                 avatar.RightFoot.Info.Goal.localPosition = (brakeLocalPosition + gasLocalPosition) / 2;
             }
-            else if(controller.Gas < 00.125f && controller.Brake < 0.0125f)
+            else if(controller.Gas < 0.0125f && controller.Brake < 0.0125f)
             {
+                // If none of them are down.
                 avatar.RightFoot.Info.Goal = rightFootTargets.Rest;
             }
             else
             {
+                // If only one of them are down.
                 avatar.RightFoot.Info.Goal = rightFootTargets.Active;
                 avatar.RightFoot.Info.Goal.localEulerAngles = singlePedalRotation;
 
+                avatar.RightFoot.Info.Deattach();
                 if (controller.Gas > controller.Brake)
                 {
                     avatar.RightFoot.Info.Goal.localPosition = gasLocalPosition;
@@ -141,10 +141,6 @@ namespace SimpleCar.Animation
             }
 
         }
-
-        #endregion
-        #region Helper
-
         private void SetPedalYaw(Transform pedal, float press)
         {
             var eulerAngles = pedal.localEulerAngles;
@@ -152,7 +148,7 @@ namespace SimpleCar.Animation
 
             pedal.localEulerAngles = eulerAngles;
         }
-        
+
         #endregion
     }
 }

@@ -18,8 +18,6 @@ namespace SimpleCar.Animation.Avatar
         [SerializeField] private IKAnimator _rightFootIk;
         [SerializeField] private IKAnimator _leftFootIk;
 
-        [SerializeField] private Transform carTransform;
-
         #endregion
         #region Public Properties
 
@@ -43,10 +41,10 @@ namespace SimpleCar.Animation.Avatar
         {
             animator = GetComponent<Animator>();
             
-            LeftHand.Init(animator, carTransform);
-            RightHand.Init(animator, carTransform);
-            LeftFoot.Init(animator, carTransform);
-            RightFoot.Init(animator, carTransform);
+            LeftHand.Init(animator);
+            RightHand.Init(animator);
+            LeftFoot.Init(animator);
+            RightFoot.Init(animator);
         }
 
         private void OnAnimatorIK(int layerIndex)
