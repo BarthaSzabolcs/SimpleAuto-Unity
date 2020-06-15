@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8742449207007457995}
   m_Layer: 0
-  m_Name: IKTarget_Right
+  m_Name: IK_SteeringWheel_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,7 +187,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4535585620129054047}
   m_Layer: 0
-  m_Name: IKTarget_Left
+  m_Name: IK_SteeringWheel_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -207,6 +207,36 @@ Transform:
   m_Father: {fileID: 4888593445802593324}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 3.777, y: 1.606, z: 56.43}
+--- !u!1 &2547380314417591178
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4529488877751845322}
+  m_Layer: 0
+  m_Name: IK_BothPedal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4529488877751845322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2547380314417591178}
+  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1578341547549513231}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
 --- !u!1 &3596949942213065720
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,6 +267,36 @@ Transform:
   m_Father: {fileID: 5785825578337904051}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -19.363, y: 0, z: 0}
+--- !u!1 &3741872775673704537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8567114724545531262}
+  m_Layer: 0
+  m_Name: IK_Gas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8567114724545531262
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3741872775673704537}
+  m_LocalRotation: {x: -0.058548473, y: 0.99511445, z: 0.0573987, w: -0.054998036}
+  m_LocalPosition: {x: 0.0002, y: 0.0698, z: 0.0818}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8771892866185952228}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3906111878758479253
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,14 +510,14 @@ MonoBehaviour:
       inclusive: 1
     _position: {x: 0, y: 2.55, z: -5.46}
   - _pitchBounds:
-      min: 5
-      max: 5
+      min: -25
+      max: 45
       inclusive: 1
     _yawBounds:
-      min: -180
-      max: -180
+      min: 5
+      max: 175
       inclusive: 1
-    _position: {x: -0.453, y: 1.222, z: 2.063}
+    _position: {x: -1.5, y: 1.5, z: 1}
 --- !u!114 &4612500547301287375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,7 +527,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5526573286271702014}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db15b9adc2ad31745b8cdf1ab5b41267, type: 3}
+  m_Script: {fileID: 11500000, guid: 92d3f282174e2b54a9669984029ee55d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   axleInfos:
@@ -483,7 +543,7 @@ MonoBehaviour:
   maxGear: 2
   motorTourgePerGear: 3500
   maxSteeringAngle: 30
-  maxBreakTourge: 2250000
+  maxBreakTourge: 22000
 --- !u!114 &6847140595716241002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,45 +553,43 @@ MonoBehaviour:
   m_GameObject: {fileID: 5526573286271702014}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03fbd3b069e505f44be10ce0828b92db, type: 3}
+  m_Script: {fileID: 11500000, guid: 093e403949e1e044d9d7664c572f9649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   wheels:
-  - collider: {fileID: 151854813095939821}
-    transform: {fileID: 3560597789061596201}
-  - collider: {fileID: 151854813042507291}
-    transform: {fileID: 3423577664251034922}
   - collider: {fileID: 151854812621008285}
     transform: {fileID: 6061153481873087725}
   - collider: {fileID: 151854811824912377}
     transform: {fileID: 338291803536275717}
+  - collider: {fileID: 151854813095939821}
+    transform: {fileID: 3560597789061596201}
+  - collider: {fileID: 151854813042507291}
+    transform: {fileID: 3423577664251034922}
   avatar: {fileID: 168759038630639660}
   steeringWheel: {fileID: 1704613812899806978}
-  steeringWheelMaxRotation: 90
-  steeringWheeIKLeft: {fileID: 4535585620129054047}
-  steeringWheeIKRight: {fileID: 8742449207007457995}
-  gearShift: {fileID: 5785825578337904051}
-  gearShiftIK: {fileID: 7092059041468679851}
+  steeringWheelMaxRotation: 135
+  gearShift: {fileID: 3831829119635607137}
   gearShiftAngleOffset: 5
-  gearShiftBaseAngle: -15
+  gearShiftBaseAngle: 15
   clutchPedal: {fileID: 7382613989211039621}
   brakePedal: {fileID: 5144100975432737597}
   gasPedal: {fileID: 8771892866185952228}
-  pedalMaxRotation: 30
-  pedalRotationOffset: 30
-  rightHandTargets:
-    _rest: {fileID: 8742449207007457995}
-    _active: {fileID: 7092059041468679851}
-  leftFootTargets:
+  pedalMaxRotation: 35
+  pedalRotationOffset: 45
+  leftHandGoals:
+    _steeringWheel: {fileID: 4535585620129054047}
+  rightHandGoals:
+    _steeringWheel: {fileID: 8742449207007457995}
+    _gearShift: {fileID: 7092059041468679851}
+    _handBrake: {fileID: 8059736047727998828}
+  leftFootGoals:
+    _clutch: {fileID: 7067340167485895681}
     _rest: {fileID: 8949901883010051434}
-    _active: {fileID: 7067340167485895681}
-  rightFootTargets:
+  rightFootGoals:
+    _brake: {fileID: 32963644760180120}
+    _gas: {fileID: 8567114724545531262}
+    _both: {fileID: 4529488877751845322}
     _rest: {fileID: 2924107217844759704}
-    _active: {fileID: 32963644760180120}
-  gasLocalPosition: {x: -0.125, y: -0.06, z: 0.13}
-  brakeLocalPosition: {x: 0.125, y: -0.06, z: 0.13}
-  singlePedalRotation: {x: 290, y: 180, z: 0}
-  dualPedalRotation: {x: 290, y: 250, z: -20}
 --- !u!114 &8789759766662895445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -597,14 +655,14 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 0.7228996, g: 0.8962264, b: 0.8609974, a: 1}
-  m_Intensity: 5
-  m_Range: 20
-  m_SpotAngle: 30
+  m_Color: {r: 1, g: 0.9020113, b: 0.28773582, a: 1}
+  m_Intensity: 3
+  m_Range: 50
+  m_SpotAngle: 40
   m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -657,7 +715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 32963644760180120}
   m_Layer: 0
-  m_Name: IK_BrakeAndGas_Active
+  m_Name: IK_Brake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -670,13 +728,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7121494171298969963}
-  m_LocalRotation: {x: 0.000000024226201, y: 0.8365716, z: 0.5478577, w: -0.000000036234255}
-  m_LocalPosition: {x: -0.0528, y: -0.0593, z: 0.1287}
+  m_LocalRotation: {x: -0.058548473, y: 0.99511445, z: 0.0573987, w: -0.054998036}
+  m_LocalPosition: {x: 0.0024, y: 0.0678, z: 0.1206}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1578341547549513231}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: -66.44, y: 180, z: 0}
+  m_Father: {fileID: 5144100975432737597}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7127338591294827945
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,9 +765,9 @@ Transform:
   - {fileID: 7382613989211039621}
   - {fileID: 5144100975432737597}
   - {fileID: 8771892866185952228}
-  - {fileID: 32963644760180120}
-  - {fileID: 2924107217844759704}
   - {fileID: 8949901883010051434}
+  - {fileID: 2924107217844759704}
+  - {fileID: 4529488877751845322}
   m_Father: {fileID: 5406202134093634808}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -723,7 +781,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7067340167485895681}
   m_Layer: 0
-  m_Name: IK_Clutch_Active
+  m_Name: IK_Clutch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -736,8 +794,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7246818159510149357}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0786, z: 0.116}
+  m_LocalRotation: {x: -0.058548473, y: 0.99511445, z: 0.0573987, w: -0.054998036}
+  m_LocalPosition: {x: 0.0033, y: 0.0669, z: 0.1284}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7382613989211039621}
@@ -768,7 +826,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7254218536990016135}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.051, y: 1.316, z: 0}
+  m_LocalPosition: {x: -0.0021, y: 1.4132, z: 0.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1011033785368955281}
@@ -785,8 +843,8 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 7
+  m_Color: {r: 1, g: 0.9190079, b: 0.41037738, a: 1}
+  m_Intensity: 5
   m_Range: 1.5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -877,14 +935,14 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 0.7228996, g: 0.8962264, b: 0.8609974, a: 1}
-  m_Intensity: 5
-  m_Range: 20
-  m_SpotAngle: 30
+  m_Color: {r: 1, g: 0.9020113, b: 0.28773582, a: 1}
+  m_Intensity: 3
+  m_Range: 50
+  m_SpotAngle: 40
   m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -967,7 +1025,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8949901883010051434}
   m_Layer: 0
-  m_Name: IK_Clutch_Rest
+  m_Name: IK_Rest_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -985,7 +1043,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1578341547549513231}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -36.205, y: 137.908, z: 6.528}
 --- !u!1 &9089657965969430533
 GameObject:
@@ -997,7 +1055,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2924107217844759704}
   m_Layer: 0
-  m_Name: Ik_BrakeAndGas_Rest
+  m_Name: Ik_Rest_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1404,16 +1462,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 047b9ec451d32a544b48a7eddb2b5bc8, type: 3}
---- !u!4 &338291803536275717 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4954775791890782122, guid: 047b9ec451d32a544b48a7eddb2b5bc8, type: 3}
-  m_PrefabInstance: {fileID: 4644122498717085359}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &3423577664251034922 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -1156930934964317307, guid: 047b9ec451d32a544b48a7eddb2b5bc8, type: 3}
-  m_PrefabInstance: {fileID: 4644122498717085359}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3560597789061596201 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -1073277153360958842, guid: 047b9ec451d32a544b48a7eddb2b5bc8, type: 3}
@@ -1432,6 +1480,16 @@ Transform:
 --- !u!4 &6061153481873087725 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7751057570222788030, guid: 047b9ec451d32a544b48a7eddb2b5bc8, type: 3}
+  m_PrefabInstance: {fileID: 4644122498717085359}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &338291803536275717 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4954775791890782122, guid: 047b9ec451d32a544b48a7eddb2b5bc8, type: 3}
+  m_PrefabInstance: {fileID: 4644122498717085359}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3423577664251034922 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1156930934964317307, guid: 047b9ec451d32a544b48a7eddb2b5bc8, type: 3}
   m_PrefabInstance: {fileID: 4644122498717085359}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4677337756250522838
@@ -1771,42 +1829,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5186323453695953220}
     m_Modifications:
-    - target: {fileID: -621505733943806071, guid: 7372f62359b54fa49862681f2859a744, type: 3}
-      propertyPath: _leftHandIk._info._type
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: -621505733943806071, guid: 7372f62359b54fa49862681f2859a744, type: 3}
-      propertyPath: _leftHandIk._info.movementSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: -621505733943806071, guid: 7372f62359b54fa49862681f2859a744, type: 3}
-      propertyPath: _rightHandIK._info.movementSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -621505733943806071, guid: 7372f62359b54fa49862681f2859a744, type: 3}
-      propertyPath: _rightHandIK._info._type
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: -621505733943806071, guid: 7372f62359b54fa49862681f2859a744, type: 3}
-      propertyPath: _leftHandIk._info.goalLerp
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: -621505733943806071, guid: 7372f62359b54fa49862681f2859a744, type: 3}
-      propertyPath: _rightHandIK._info.goalLerp
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: -621505733943806071, guid: 7372f62359b54fa49862681f2859a744, type: 3}
-      propertyPath: _rightFootIk._info._type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -621505733943806071, guid: 7372f62359b54fa49862681f2859a744, type: 3}
-      propertyPath: _rightFootIk._info.goalLerp
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: -621505733943806071, guid: 7372f62359b54fa49862681f2859a744, type: 3}
-      propertyPath: _leftFootIk._info.goalLerp
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 355634173355253153, guid: 7372f62359b54fa49862681f2859a744, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.4626046

@@ -15,27 +15,31 @@ MonoBehaviour:
   _leftHandIk:
     _info:
       _type: 2
-      lerpSpeed: 1.5
-      attachDistance: 0.0125
       boneTransform: {fileID: 2326739583110551230}
+      lerpSpeed: 1.5
+      attachDistance: 0.125
+      deattachDistance: 0.35
   _rightHandIK:
     _info:
       _type: 3
+      boneTransform: {fileID: 5886723524526898499}
       lerpSpeed: 1.5
       attachDistance: 0.0125
-      boneTransform: {fileID: 5886723524526898499}
+      deattachDistance: 0.35
   _rightFootIk:
     _info:
-      _type: 0
-      lerpSpeed: 0.25
-      attachDistance: 0.000125
+      _type: 1
       boneTransform: {fileID: 3273259665169757185}
+      lerpSpeed: 0.5
+      attachDistance: 0.00125
+      deattachDistance: 0.00125
   _leftFootIk:
     _info:
       _type: 0
-      lerpSpeed: 0.25
-      attachDistance: 0.000125
       boneTransform: {fileID: 2098439426626832069}
+      lerpSpeed: 0.5
+      attachDistance: 0.00125
+      deattachDistance: 0.00125
 --- !u!1001 &97730482209060655
 PrefabInstance:
   m_ObjectHideFlags: 0

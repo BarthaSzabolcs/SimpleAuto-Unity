@@ -34,9 +34,6 @@ namespace SimpleCar.Animation.Avatar
 
         public void Update()
         {
-            Info.CurrentPosition = animator.GetIKPosition(Info.Type);
-            Info.CurrentRotation = animator.GetIKRotation(Info.Type);
-
             if (Info.Goal != null)
             {
                 animator.SetIKPositionWeight(Info.Type, 1);

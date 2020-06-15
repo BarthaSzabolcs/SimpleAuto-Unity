@@ -15,9 +15,10 @@ namespace SimpleCar.Animation.Avatar
         [SerializeField] private AvatarIKGoal _type;
         [SerializeField] private Transform boneTransform;
 
-        [Header("Lerp")]
+        [Header("Interpolation")]
         [SerializeField] private float lerpSpeed;
         [SerializeField] private float attachDistance;
+        [SerializeField] private float deattachDistance;
 
         #endregion
         #region Public Properties
@@ -30,7 +31,7 @@ namespace SimpleCar.Animation.Avatar
             {
                 if (_goal == null)
                 {
-                    previousGoal = (transform.TransformPoint(boneTransform.position), boneTransform.rotation);
+                    previousGoal = CalculatePreviousGoal(boneTransform);
                     
                     Attached = false;
                 }
@@ -38,11 +39,11 @@ namespace SimpleCar.Animation.Avatar
                 {
                     if (Attached == false)
                     {
-                        previousGoal = CalculatePreviousGoalMidTransition();
+                        previousGoal = CalculatePreviousGoal(boneTransform);
                     }
                     else
                     {
-                        previousGoal = CalculatePreviousGoalPostTransition(_goal);
+                        previousGoal = CalculatePreviousGoal(boneTransform);
                     }
 
                     Attached = false;
@@ -50,15 +51,13 @@ namespace SimpleCar.Animation.Avatar
 
                 if (_goal != value && value != null && Attached == false )
                 {
-                    lerpMultiplier = CalculateLerpParameters(transform.TransformPoint(previousGoal.Value.position), value.position);
+                    goalDistanceAtLerpBegin = CalculateLerpParameters(transform.TransformPoint(previousGoal.Value.position), value.position);
                 }
 
                 _goal = value;
             }
         }
         public bool Attached { get; set; }
-        public Vector3 CurrentPosition { get; set; }
-        public Quaternion CurrentRotation { get; set; }
 
         #endregion
         #region Backing Fields
@@ -73,24 +72,21 @@ namespace SimpleCar.Animation.Avatar
         
         // Lerp
         private float currentlerpValue;
-        private float lerpMultiplier;
+        private float goalDistanceAtLerpBegin;
 
         #endregion
 
 
         #region Public Methods
 
-        public void Init(Transform centerTransform)
+        public void Init(Transform transform)
         {
-            this.transform = centerTransform;
+            this.transform = transform;
         }
 
         public (Vector3 position, Quaternion rotation) Transition()
         {
-            if (Goal.name == "IK_SteeringWheel_Right")
-            {
-                int asd = 0;
-            }
+            Attached = IsAttached(); 
 
             if (Attached)
             {
@@ -98,14 +94,12 @@ namespace SimpleCar.Animation.Avatar
             }
             else
             {
-                currentlerpValue += (lerpSpeed / lerpMultiplier) * Time.deltaTime/* (1 / Time.deltaTime)*/;
+                currentlerpValue += (lerpSpeed / goalDistanceAtLerpBegin) * Time.deltaTime;
 
                 var translation = CurrentTranslation();
-                var distanceFromGoal = Mathf.Abs(Vector3.Distance(translation.position, Goal.position));
 
-                if (currentlerpValue >= 1 || distanceFromGoal < attachDistance)
+                if (currentlerpValue >= 1)
                 {
-                    Attached = true;
                     return (Goal.position, Goal.rotation);
                 }
                 else
@@ -114,10 +108,21 @@ namespace SimpleCar.Animation.Avatar
                 }
             }
         }
-
-        public void Deattach()
+        
+        private bool IsAttached()
         {
-            Attached = false;
+            var distanceFromGoal = Mathf.Abs(Vector3.Distance(boneTransform.position, Goal.position));
+            if (Attached && distanceFromGoal > deattachDistance)
+            {
+                return false;
+            }
+
+            if (Attached == false && distanceFromGoal < attachDistance)
+            {
+                return true;
+            }
+
+            return Attached;
         }
 
         #endregion
@@ -126,11 +131,11 @@ namespace SimpleCar.Animation.Avatar
         private (Vector3 position, Quaternion rotation) CurrentTranslation()
         {
             var previousPosition = transform.TransformPoint(previousGoal.Value.position);
-            // var previousRotation = Quaternion.Inverse(centerTransform.rotation) * previousGoal.Value.rotation;
-            // var previousRotation = centerTransform.rotation * previousGoal.Value.rotation;
+            var nextPosition = Vector3.Slerp(previousPosition, Goal.position, currentlerpValue);
 
-            var nextPosition = Vector3.Lerp(previousPosition, Goal.position, currentlerpValue);
-            //var nextRotation = Quaternion.Lerp(previousRotation, Goal.rotation, currentlerpValue);
+            var previousRotation = previousGoal.Value.rotation;
+            // KnownBug - Next rotation is incorrect, does not follow the shortest path.
+            var nextRotation = Quaternion.Slerp(previousRotation, Goal.rotation, currentlerpValue);
 
             return (nextPosition, Goal.rotation/*nextRotation*/);
         }
@@ -141,15 +146,7 @@ namespace SimpleCar.Animation.Avatar
             return Mathf.Abs(Vector3.Distance(from, to));
         }
         
-
-        private (Vector3 position, Quaternion rotation) CalculatePreviousGoalMidTransition()
-        {
-            var (position, rotation) = CurrentTranslation();
-            position = transform.InverseTransformPoint(position);
-
-            return (position, rotation);
-        }
-        private (Vector3 position, Quaternion rotation) CalculatePreviousGoalPostTransition(Transform goal)
+        private (Vector3 position, Quaternion rotation) CalculatePreviousGoal(Transform goal)
         {
             var position = transform.InverseTransformPoint(goal.position);
             return (position, goal.rotation);

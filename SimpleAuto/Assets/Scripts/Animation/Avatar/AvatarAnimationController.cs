@@ -56,11 +56,5 @@ namespace SimpleCar.Animation.Avatar
         }
 
         #endregion
-
-        
-        //private void RefreshGrab()
-        //{
-        //    animator.SetFloat(nameof(Grab), grabCurve.Evaluate(grabTimer.ElapsedPercentage));
-        //}
     }
 }
