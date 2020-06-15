@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: gui_SpeedMeter_background
+    uniqueID: 1699215101
+    locked: 0
+  - name: gui_SpeedMeter_foreground
+    uniqueID: 2166159995
+    locked: 0
