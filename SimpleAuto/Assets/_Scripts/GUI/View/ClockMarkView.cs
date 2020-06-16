@@ -8,33 +8,36 @@ namespace SimpleCar.GUI.View
     {
         #region Public Properties
 
-        public Color Color
+        public ClockViewStyle ClockStyle
         {
-            get => _color;
+            get => _clockStyle;
             set
             {
-                if (_color != value)
+                if (_clockStyle != value)
                 {
-                    markImage.color = value;
-                    textTMP.color = value;
+                    _clockStyle = value;
+                    FullRedraw();
                 }
-                _color = value;
             }
         }
-        public string Text
-        {
-            get => textTMP.text;
+        public (Quaternion rotation, float display) Value 
+        { 
+            get => _value;
             set
             {
-                textTMP.text = value;
+                if (_value != value)
+                {
+                    _value = value;
+                    RedrawValue();
+                }
             }
         }
-        public float Value { get; set; }
 
         #endregion
         #region Backing Fields
 
-        private Color _color;
+        private ClockViewStyle _clockStyle;
+        private (Quaternion rotation, float display) _value;
 
         #endregion
         #region Private Fields
@@ -46,10 +49,47 @@ namespace SimpleCar.GUI.View
 
         #region Public Methods
 
-        public void Init(Transform transform)
+        public void Init(Transform transform, ClockViewStyle style)
         {
             markImage = transform.GetComponent<Image>();
             textTMP = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+
+            ClockStyle = style;
+        }
+
+        public void Destroy()
+        {
+            GameObject.Destroy(markImage.gameObject);
+        }
+
+        #endregion
+        #region Private Methods
+
+        private void FullRedraw()
+        {
+            // ToDo - change mark image etc.
+            RedrawValue();
+        }
+        private void RedrawValue()
+        {            
+            markImage.rectTransform.localRotation = Value.rotation;
+
+            RedrawText();
+            RedrawColor();
+        }
+        private void RedrawText()
+        {
+            var number = ClockStyle.RoundMarkValue ? Mathf.RoundToInt(Value.display) : Value.display;
+            textTMP.text = number.ToString();
+        }
+        private void RedrawColor()
+        {
+            var color = Value.display > ClockStyle.ExtremeValueMargin ? 
+                ClockStyle.ExtremMarkColor : 
+                ClockStyle.MarkColor;
+
+            markImage.color = color;
+            textTMP.color = color;
         }
 
         #endregion

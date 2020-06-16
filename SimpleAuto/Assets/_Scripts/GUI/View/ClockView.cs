@@ -14,10 +14,24 @@ namespace SimpleCar.GUI.View
     public class ClockView
     {
         #region Public Properties
-
-        public float FaceAngleOffset 
+ 
+        public ClockViewStyle Style 
         { 
-            get => _faceAngleOffset; 
+            get => _style;
+            set 
+            {
+                if (_style != value)
+                {
+                    _style = value;
+                    FullRedraw();
+                }
+            }
+        }
+
+        // Face
+        public float FaceAngleOffset
+        {
+            get => _faceAngleOffset;
             set
             {
                 if (_faceAngleOffset != value)
@@ -39,21 +53,47 @@ namespace SimpleCar.GUI.View
                 }
             }
         }
-        public float PointerValue
+
+        // Marks
+        public float MinValue
         {
-            get => _pointerValue;
+            get => _minValue;
             set
             {
-                _pointerValue = value;
+                if (value != _minValue)
+                {
+                    _minValue = value;
+                    RedrawMarks();
+                }
+            }
+        }
+        public float MaxValue
+        {
+            get => _maxValue;
+            set
+            {
+                if (value != _maxValue)
+                {
+                    _maxValue = value;
+                    RedrawMarks();
+                }
+            }
+        }
+        public float CurrentValue
+        {
+            get => _currentValue;
+            set
+            {
+                _currentValue = value;
                 RotatePointer(value);
             }
         }
 
         // Colors
-        public Color PointerColor 
-        { 
+        public Color PointerColor
+        {
             get => _pointerColor;
-            set 
+            set
             {
                 if (value != _pointerColor)
                 {
@@ -101,7 +141,7 @@ namespace SimpleCar.GUI.View
             }
         }
 
-        public bool Flip 
+        public bool Flip
         {
             get => components.Canvas.transform.localScale.x < 0;
             set
@@ -109,7 +149,7 @@ namespace SimpleCar.GUI.View
                 if (_flip != value)
                 {
                     var localScale = components.Canvas.transform.localScale;
-                    
+
                     components.Canvas.transform.localScale = new Vector3(
                         Mathf.Abs(localScale.x) * (value ? -1 : 1),
                         localScale.y,
@@ -122,89 +162,99 @@ namespace SimpleCar.GUI.View
         #endregion
         #region Backing Fields
 
+        // Face
         private float _faceAngleOffset;
         private float _faceAngleLength = 360;
-        private float _pointerValue;
-        
+        private float _currentValue;
+        private float _minValue;
+        private float _maxValue;
+
         // Colors
         private Color _pointerColor;
         private Color _faceColor;
         private Color _markColor;
         private Color _extremMarkColor;
 
+        // All
         private bool _flip;
+        
+        private ClockViewStyle _style;
 
         #endregion
         #region Private Fields
 
         private ClockViewComponents components;
-        private List<ClockMarkGui> marks = new List<ClockMarkGui>();
-
-        // Pointer
-        private float pointerOffset;
+        private List<ClockMarkView> marks = new List<ClockMarkView>();
 
         #endregion
 
 
         #region Public Methods
 
-        public ClockView(ClockViewComponents components)
+        public ClockView(ClockViewComponents components, ClockViewStyle clockStyle)
         {
             this.components = components;
-
-            FullRedraw();
+            Style = clockStyle;
         }
 
         #endregion
         #region Private Methods
 
-        public void FullRedraw()
+        private void FullRedraw()
         {
-            components.Face.color = FaceColor;
-            components.Pointer.color = PointerColor;
+            components.Face.color = Style.FaceColor;
+            components.Pointer.color = Style.PointerColor;
             RedrawFace();
             RedrawMarks();
         }
-
         private void RedrawFace()
         {
-            var faceAngle = FaceAngleLength / 360;
+            var faceAngle = Style.FaceAngleLength / 360;
 
             components.FaceMask.fillAmount = faceAngle;
-            components.FaceMask.rectTransform.localEulerAngles = FaceAngleOffset * Vector3.forward;
-            components.Face.rectTransform.localEulerAngles = FaceAngleOffset * Vector3.forward;
+            components.FaceMask.rectTransform.localEulerAngles = Style.FaceAngleOffset * Vector3.forward;
+            components.Face.rectTransform.localEulerAngles = Style.FaceAngleOffset * Vector3.forward;
 
-            RotatePointer(PointerValue);
+            RotatePointer(CurrentValue);
         }
         private void RotatePointer(float percent)
         {
-            components.Pointer.rectTransform.localEulerAngles = Vector3.forward * percent * FaceAngleLength;
+            components.Pointer.rectTransform.localEulerAngles = Vector3.forward * percent * Style.FaceAngleLength;
         }
         private void RedrawMarks()
         {
+            // ToDo - Refactor for less garbage.
+            // Clear previous Marks. 
+            foreach (var mark in marks)
+            {
+                mark.Destroy();
+            }
+            marks.Clear();
 
+            // The start and the end of the face.
+            var rotationStart = Quaternion.Euler(0, 0, Style.FaceAngleOffset);
+            var rotationEnd = Quaternion.Euler(0, 0, Style.FaceAngleOffset + Style.FaceAngleLength);
+
+            var displayValue = Style.MinValue;
+            while (displayValue <= Style.MaxValue)
+            {
+                // Place and Init mark.
+                var markInstance = GameObject.Instantiate(components.MarkPrefab, components.Canvas.transform);
+                var markView = new ClockMarkView();
+                markView.Init(markInstance.transform, Style);
+
+                // Calculate rotation.
+                var rotation = Quaternion.Lerp(rotationStart, rotationEnd, displayValue / Style.MaxValue);
+                // Set the rotation and display value of the recently placed mark.
+                markView.Value = (rotation, displayValue);
+
+                marks.Add(markView);
+
+                // Increase the displayValue, determining where the next mark will be placed.
+                displayValue += Style.MarkDistance;
+            }
         }
 
         #endregion
-
-        //private void CreateMarks(ValueRange<float> range, float valueStep, bool round)
-        //{
-        //    var baseRotation = Quaternion.Euler(0, 0, _faceAngles.Min);
-        //    var currentValue = range.Min;
-
-        //    while (currentValue <= range.Max)
-        //    {
-        //        var markModel = new ClockMarkModel()
-        //        {
-        //            Color = currentValue > model.ExtremeValueLimit ?
-        //            markExtremeColor : markColorNormal,
-        //            Value = currentValue
-        //        };
-        //        var markControl = new ClockMarkGui(transform, mark, markModel);
-        //        clockMarks.Add(markControl);
-
-        //        currentValue += valueStep;
-        //    }
-        //}
     }
 }

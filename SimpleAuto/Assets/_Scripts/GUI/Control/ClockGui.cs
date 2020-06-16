@@ -32,9 +32,24 @@ namespace SimpleCar.GUI.Clock
                 if (value != null && _model != value)
                 {
                     value.PropertyChanged += HandleModelPropertyChange;
-                    SyncView(value);
+                    
+                    if (view != null)
+                    {
+                        SyncView(value);
+                    }
                 }
                 _model = value;
+            }
+        }
+        public ClockViewStyle Style 
+        {
+            get => view.Style;
+            set
+            {
+                if (value != view.Style)
+                {
+                    view.Style = value;
+                }
             }
         }
 
@@ -55,7 +70,6 @@ namespace SimpleCar.GUI.Clock
         #endregion
         #region Private Fields
 
-        private List<ClockMarkGui> marks = new List<ClockMarkGui>();
         private ClockView view;
 
         #endregion
@@ -63,34 +77,15 @@ namespace SimpleCar.GUI.Clock
 
         #region Public Methods
 
-        public void Init(ClockModel model)
+        public void Init(ClockModel model, ClockViewStyle style)
         {
-            view = new ClockView(requiredViewComponents);
             Model = model;
+            view = new ClockView(requiredViewComponents, style);
         }
         private void SyncView(ClockModel model)
         {
-            view.PointerValue = model.Percent;
+            view.CurrentValue = model.Percent;
         }
-        //public void  SyncView(ClockModel model)
-        //{
-        //    var fillAngle = (model.MaxValue - model.MinValue) / 360;
-
-        //    var currentValue = model.MinValue;
-        //    while (currentValue <= model.MaxValue)
-        //    {
-        //        var markModel = new ClockMarkModel()
-        //        {
-        //            Color = currentValue >  model.ExtremeValueLimit ? 
-        //            markExtremeColor : markColorNormal,
-        //            Value = currentValue
-        //        };
-        //        var markControl = new ClockMarkGui(transform, mark, markModel);
-        //        clockMarks.Add(markControl);
-
-        //        currentValue += markDistance;
-        //    }
-        //}
 
         #endregion
 
@@ -99,7 +94,7 @@ namespace SimpleCar.GUI.Clock
             switch (e.PropertyName)
             {
                 case nameof(ClockModel.Value):
-                    view.PointerValue = Model.Percent;
+                    view.CurrentValue = Model.Percent;
                     break;
   
                 case nameof(ClockModel.Min):
