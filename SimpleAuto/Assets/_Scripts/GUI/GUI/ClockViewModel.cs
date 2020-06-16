@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SimpleCar.GUI.Model;
-using SimpleCar.GUI.View;
+﻿using System.ComponentModel;
+using SimpleCar.GUI.Model.Clock;
+using SimpleCar.GUI.View.Clock;
 using UnityEngine;
 
-namespace SimpleCar.GUI.Clock
+namespace SimpleCar.GUI.ViewModel.Clock
 {
-    public class ClockGui : MonoBehaviour
+    public class ClockViewModel : MonoBehaviour
     {
         #region Editor Settings
 
@@ -41,25 +36,11 @@ namespace SimpleCar.GUI.Clock
                 _model = value;
             }
         }
-        public ClockViewStyle Style 
-        {
-            get => view.Style;
-            set
-            {
-                if (value != view.Style)
-                {
-                    view.Style = value;
-                }
-            }
-        }
-
+        
         // View wrappers
-        public Color PointerColor { get => view.PointerColor; set { view.PointerColor = value; } }
-        public Color FaceColor { get => view.FaceColor; set { view.FaceColor = value; } }
-        public Color MarkColor { get => view.MarkColor; set { view.MarkColor = value; } }
-        public Color ExtremMarkColor { get => view.ExtremMarkColor; set { view.ExtremMarkColor = value; } }
-        public float FaceAngleOffset { get => view.FaceAngleOffset; set { view.FaceAngleOffset = value; } }
-        public float FaceAngleLength { get => view.FaceAngleLength; set { view.FaceAngleLength = value; } }
+        public ClockViewStyle Style { get => view.Style; set { view.Style = value; } }
+        public float MinDisplayValue { get => view.MinValue; set { view.MinValue = value; } }
+        public float MaxDisplayValue { get => view.MaxValue; set { view.MaxValue = value; } }
         public bool Flip { get => view.Flip; set { view.Flip = value; } }
 
         #endregion
@@ -88,6 +69,7 @@ namespace SimpleCar.GUI.Clock
         }
 
         #endregion
+        #region Private Methods
 
         private void HandleModelPropertyChange(object sender, PropertyChangedEventArgs e)
         {
@@ -98,17 +80,28 @@ namespace SimpleCar.GUI.Clock
                     break;
   
                 case nameof(ClockModel.Min):
-                    
+                    view.CurrentValue = Model.Percent;
                     break;
 
                 case nameof(ClockModel.Max):
+                    view.CurrentValue = Model.Percent;
                     break;
 
                 case nameof(ClockModel.ExtremeValueLimit):
-
+                    view.ExtremeValueLimit = CalculateDisplayExtremeValue();
                     break;
             }
         }
 
+        private float CalculateDisplayExtremeValue()
+        {
+            var displayRange = MaxDisplayValue - MinDisplayValue;
+            var valueRange = Model.Max - Model.Min;
+            var ratio = displayRange / valueRange;
+
+            return Model.ExtremeValueLimit * ratio;
+        }
+
+        #endregion
     }
 }

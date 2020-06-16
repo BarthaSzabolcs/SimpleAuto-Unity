@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Utility;
 
-namespace SimpleCar.GUI.Model
+namespace SimpleCar.GUI.Model.Clock
 {
     public class ClockModel : ModelBase
     {

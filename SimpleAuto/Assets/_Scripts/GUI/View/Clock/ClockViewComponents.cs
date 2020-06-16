@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SimpleCar.GUI.View
+namespace SimpleCar.GUI.View.Clock
 {
     [Serializable]
     public class ClockViewComponents
@@ -21,6 +17,7 @@ namespace SimpleCar.GUI.View
 
         #endregion
         #region Public Properties
+
         public GameObject MarkPrefab => _markPrefab;  
         public Canvas Canvas => _canvas;
         public Image Pointer => _pointerImage;
