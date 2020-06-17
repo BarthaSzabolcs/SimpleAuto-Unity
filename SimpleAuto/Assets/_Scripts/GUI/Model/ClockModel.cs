@@ -16,7 +16,7 @@ namespace SimpleCar.GUI.Model.Clock
             get => _min;
             set
             {
-                Evaluate(ref _min, value);
+                SetAndNotify(ref _min, value);
             }
         }
         public float Max
@@ -24,7 +24,7 @@ namespace SimpleCar.GUI.Model.Clock
             get => _max;
             set
             {
-                Evaluate(ref _max, value);
+                SetAndNotify(ref _max, value);
             }
         }
         public float ExtremeValueLimit
@@ -32,7 +32,7 @@ namespace SimpleCar.GUI.Model.Clock
             get => _extremeValueLimit;
             set
             {
-                Evaluate(ref _extremeValueLimit, value);
+                SetAndNotify(ref _extremeValueLimit, value);
             }
         }
         public float Value 
@@ -40,7 +40,7 @@ namespace SimpleCar.GUI.Model.Clock
             get => _value;
             set
             {
-                Evaluate(ref _value, value);
+                SetAndNotify(ref _value, value);
             } 
         }
         public float Percent => _value / (_max - _min);

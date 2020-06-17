@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 606593348805993913}
   - component: {fileID: 606593348805993894}
   m_Layer: 5
-  m_Name: gui_Dashboard
+  m_Name: gui_Dashboard_Overlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -267,11 +267,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6637693622988136685, guid: b4aefb734bd286641b06bda78e5e0838, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 350
+      value: 155.5556
       objectReference: {fileID: 0}
     - target: {fileID: 6637693622988136685, guid: b4aefb734bd286641b06bda78e5e0838, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 350
+      value: 155.5556
       objectReference: {fileID: 0}
     - target: {fileID: 6637693622988136685, guid: b4aefb734bd286641b06bda78e5e0838, type: 3}
       propertyPath: m_AnchorMin.x

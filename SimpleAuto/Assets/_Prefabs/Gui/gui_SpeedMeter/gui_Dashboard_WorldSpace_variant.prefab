@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 606593348805993895, guid: b7cd8ba1e297a834990c91d21847fa0c, type: 3}
       propertyPath: m_Name
-      value: gui_WorldDashboards
+      value: gui_Dashboard_WorldSpace_variant
       objectReference: {fileID: 0}
     - target: {fileID: 606593348805993912, guid: b7cd8ba1e297a834990c91d21847fa0c, type: 3}
       propertyPath: m_RenderMode
@@ -182,6 +182,18 @@ PrefabInstance:
     - target: {fileID: 6086296319112110872, guid: b7cd8ba1e297a834990c91d21847fa0c, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7195178663803523433, guid: b7cd8ba1e297a834990c91d21847fa0c, type: 3}
+      propertyPath: m_fontSize
+      value: 0.0072
+      objectReference: {fileID: 0}
+    - target: {fileID: 7195178663803523433, guid: b7cd8ba1e297a834990c91d21847fa0c, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.0072
+      objectReference: {fileID: 0}
+    - target: {fileID: 7195178663803523433, guid: b7cd8ba1e297a834990c91d21847fa0c, type: 3}
+      propertyPath: m_firstOverflowCharacterIndex
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7cd8ba1e297a834990c91d21847fa0c, type: 3}

@@ -14,30 +14,43 @@ namespace Test.Gui
         [SerializeField] private float maxSpeed;
 
         [Header("Required Components")]
-        [SerializeField] private ClockViewModel[] speedGauges;
-        [SerializeField] private ClockViewModel[] rpmGauges;
+        [SerializeField] private ClockViewModel[] speedClock;
+        [SerializeField] private ClockViewModel[] rpmClock;
         [SerializeField] private CarController carController;
 
-        [Header("Model:")]
-        [Range(0, 1)] [SerializeField] private float percentage;
-        [SerializeField] private float minValue;
-        [Range(0.1f, 25000)] [SerializeField] private float maxValue;
-        [Range(0, 1)] [SerializeField] private float extremeValuePercentage;
+        [Header("View:")]
+        [SerializeField] private ClockViewStyle[] styles;
+        [SerializeField] private string styleCycleKey;
 
-        [Header("View:")] 
-        [SerializeField] private bool overwriteViewSettings;
-        [SerializeField] private ClockViewStyle speedGaugeStyle;
-        [SerializeField] private ClockViewStyle rpmGaugeStyle;
+        #endregion
+        #region Private Properties
 
-        [SerializeField] private float minDisplayValue;
-        [SerializeField] private float maxDisplayValue;
-        [SerializeField] private bool flip;
+        private int StyleIndex
+        {
+            get => _styleIndex;
+            set
+            {
+                if (value >= styles.Length)
+                {
+                    _styleIndex = 0;
+                }
+                else
+                {
+                    _styleIndex = value;
+                }
+            }
+        }
+
+        #endregion
+        #region Backing Fields
+
+        private int _styleIndex;
 
         #endregion
         #region Private Fields
 
-        ClockModel speedGaugeModel;
-        ClockModel rpmGaugeModel;
+        ClockModel speedClockModel;
+        ClockModel rpmClockModel;
         Rigidbody carRigidbody;
 
         #endregion
@@ -47,28 +60,28 @@ namespace Test.Gui
         private void Start()
         {
             // Speed
-            speedGaugeModel = new ClockModel()
+            speedClockModel = new ClockModel()
             {
                 Min = 0,
                 Max = 1,
                 ExtremeValueLimit = 0.75f
             };
-            foreach (var clock in speedGauges)
+            foreach (var clock in speedClock)
             {
-                clock.Init(speedGaugeModel, speedGaugeStyle);
+                clock.Init(speedClockModel, styles[0]);
                 clock.MaxDisplayValue = maxSpeed;
             }
 
             // RPM
-            rpmGaugeModel = new ClockModel()
+            rpmClockModel = new ClockModel()
             {
                 Min = 0,
                 Max = 1,
                 ExtremeValueLimit = 0.85f
             };
-            foreach (var clock in rpmGauges)
+            foreach (var clock in rpmClock)
             {
-                clock.Init(rpmGaugeModel, rpmGaugeStyle);
+                clock.Init(rpmClockModel, styles[0]);
                 clock.MaxDisplayValue = 5;
             }
 
@@ -82,34 +95,29 @@ namespace Test.Gui
         private void Update()
         {
             // Model
-            speedGaugeModel.Value = CalculateSpeedoMeterValue();
-            rpmGaugeModel.Value = carController.Gas;
-            //model.Min = minValue;
-            //model.Max = maxValue;
-            //model.ExtremeValueLimit = extremeValuePercentage * model.Range;
+            speedClockModel.Value = CalculateSpeedoMeterValue();
+            rpmClockModel.Value = carController.Gas;
 
-            foreach (var clock in speedGauges)
+            if (Input.GetKeyDown(styleCycleKey))
             {
-                clock.MinDisplayValue = minDisplayValue;
-                clock.MaxDisplayValue = maxDisplayValue;
-                clock.Flip = flip;
-                clock.Style = speedGaugeStyle;
-            }
-
-            if (overwriteViewSettings)
-            {
-                foreach (var clock in rpmGauges)
-                {
-                    clock.MinDisplayValue = minDisplayValue;
-                    clock.MaxDisplayValue = maxDisplayValue;
-                    clock.Flip = flip;
-                    clock.Style = speedGaugeStyle;
-                }
+                CycleStyles();
             }
         }
 
         #endregion
         #region Private Methods
+        private void CycleStyles()
+        {
+            StyleIndex++;
+            foreach (var clock in rpmClock)
+            {
+                clock.Style = styles[StyleIndex];
+            }
+            foreach (var clock in speedClock)
+            {
+                clock.Style = styles[StyleIndex];
+            }
+        }
 
         private float CalculateSpeedoMeterValue()
         {

@@ -12,7 +12,7 @@ namespace SimpleCar.GUI.Model
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void Evaluate<T>(ref T currentValue, T newValue, [CallerMemberName] string propertyName = "") 
+        protected void SetAndNotify<T>(ref T currentValue, T newValue, [CallerMemberName] string propertyName = "") 
             where T: IEquatable<T>
         {
             if (currentValue.Equals(newValue) == false)

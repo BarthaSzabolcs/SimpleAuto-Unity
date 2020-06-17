@@ -1,4 +1,5 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,7 @@ namespace SimpleCar.GUI.View.Clock
         [SerializeField] private Image _maskImage;
         [SerializeField] private GameObject _markPrefab;
         [SerializeField] private Transform _markTransform;
+        [SerializeField] private TextMeshProUGUI _valueTMP;
 
         #endregion
         #region Public Properties
@@ -29,7 +31,8 @@ namespace SimpleCar.GUI.View.Clock
         public Image RimExtreme => _rimExtremeImage;
         public Image Mask => _maskImage;
         public Transform MarkTransform => _markTransform;
-        
+        public TextMeshProUGUI CurrentValue => _valueTMP;
+
         #endregion
     }
 }

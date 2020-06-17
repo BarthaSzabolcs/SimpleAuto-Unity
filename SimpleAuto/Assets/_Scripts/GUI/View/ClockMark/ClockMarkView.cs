@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -137,8 +138,8 @@ namespace SimpleCar.GUI.View.ClockMark
         }
         private void RedrawTextContent()
         {
-            var number = Style.roundValue ? Mathf.RoundToInt(Value.display) : Value.display;
-            textTMP.text = number.ToString();
+            var number = Math.Round(Value.display, Style.decimalsRounded);
+            textTMP.text = string.Format(Style.format, number);
         }
         private void RedrawTextPlacement()
         {

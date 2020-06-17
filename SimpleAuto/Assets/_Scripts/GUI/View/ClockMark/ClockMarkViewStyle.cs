@@ -18,8 +18,11 @@ namespace SimpleCar.GUI.View.ClockMark
 
         // Text
         public ClockMarkRotation rotation;
+        [Range(0, 360)] 
         public float rotationOffset;
-        public bool roundValue;
+        [Range(0, 15)] 
+        public int decimalsRounded;
+        public string format;
         public Vector2 textRelativePosition;
     }
 }
