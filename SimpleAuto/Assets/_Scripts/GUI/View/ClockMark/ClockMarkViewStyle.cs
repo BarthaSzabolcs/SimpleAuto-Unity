@@ -16,8 +16,10 @@ namespace SimpleCar.GUI.View.ClockMark
         public Color extremeColor;
         public Color normalColor;
 
-        // Placement
-        public Vector2 labelOffset;
+        // Text
+        public ClockMarkRotation rotation;
+        public float rotationOffset;
         public bool roundValue;
+        public Vector2 textRelativePosition;
     }
 }

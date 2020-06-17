@@ -11,9 +11,12 @@ namespace SimpleCar.GUI.View.Clock
 
         [SerializeField] private Canvas _canvas;
         [SerializeField] private Image _pointerImage;
-        [SerializeField] private Image _faceImage;
-        [SerializeField] private Image _faceMaskImage;
+        [SerializeField] private Image _pointerBaseImage;
+        [SerializeField] private Image _rimImage;
+        [SerializeField] private Image _rimExtremeImage;
+        [SerializeField] private Image _maskImage;
         [SerializeField] private GameObject _markPrefab;
+        [SerializeField] private Transform _markTransform;
 
         #endregion
         #region Public Properties
@@ -21,9 +24,12 @@ namespace SimpleCar.GUI.View.Clock
         public GameObject MarkPrefab => _markPrefab;  
         public Canvas Canvas => _canvas;
         public Image Pointer => _pointerImage;
-        public Image Face => _faceImage;
-        public Image FaceMask => _faceMaskImage;
-
+        public Image PointerBase => _pointerBaseImage;
+        public Image Rim => _rimImage;
+        public Image RimExtreme => _rimExtremeImage;
+        public Image Mask => _maskImage;
+        public Transform MarkTransform => _markTransform;
+        
         #endregion
     }
 }

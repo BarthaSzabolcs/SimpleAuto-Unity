@@ -65,13 +65,14 @@ namespace SimpleCar.GUI.View.Clock
                 RedrawPointer(value);
             }
         }
-        public float ExtremeValueLimit
+        public float ExtremeValuePercentage
         {
-            get => _extremeValueLimit;
+            get => _extremeValuePercentage;
             set
             {
-                _extremeValueLimit = value;
+                _extremeValuePercentage = value;
 
+                RedrawRimExtreme();
                 for (int i = 0; i < marks.Count; i++)
                 {
                     RefreshMarkColor(i);
@@ -96,6 +97,11 @@ namespace SimpleCar.GUI.View.Clock
         }
 
         #endregion
+        #region Private Properties
+
+        private float ValueRange => _maxValue - _minValue;
+
+        #endregion
         #region Backing Fields
 
         private ClockViewStyle _style;
@@ -104,7 +110,7 @@ namespace SimpleCar.GUI.View.Clock
         private float _currentValue;
         private float _minValue;
         private float _maxValue;
-        private float _extremeValueLimit;
+        private float _extremeValuePercentage;
 
         private bool _flip;
         
@@ -119,9 +125,17 @@ namespace SimpleCar.GUI.View.Clock
 
         #region Public Methods
 
-        public ClockView(ClockViewComponents components, ClockViewStyle clockStyle)
+        public ClockView(ClockViewComponents components, ClockViewStyle clockStyle, 
+            float minDisplayedValue, float maxDisplayedValue, float extremePercentage)
         {
+            // Init
             this.components = components;
+
+            _minValue = minDisplayedValue;
+            _maxValue = maxDisplayedValue;
+            _extremeValuePercentage = extremePercentage;
+            
+            // Set style, and redraw.
             Style = clockStyle;
         }
 
@@ -130,8 +144,20 @@ namespace SimpleCar.GUI.View.Clock
 
         private void FullRedraw()
         {
-            components.Face.color = Style.faceColor;
+            // Colors
+            components.Mask.color = Style.maskColor;
+            components.Rim.color = Style.rimColor;
+            components.RimExtreme.color = Style.rimExtremeColor;
+            components.PointerBase.color = Style.pointerBaseColor;
             components.Pointer.color = Style.pointerColor;
+
+            // Sprites
+            components.Mask.sprite = Style.mask;
+            components.Rim.sprite = Style.rim;
+            components.RimExtreme.sprite = Style.rimExtreme;
+            components.PointerBase.sprite = Style.pointerBase;
+            components.Pointer.sprite = Style.pointer;
+
             RedrawFace();
             RedrawMarks();
         }
@@ -139,19 +165,35 @@ namespace SimpleCar.GUI.View.Clock
         private void RedrawFace()
         {
             var fillAmount = Style.faceAngleLength / 360;
+            components.Mask.fillAmount = fillAmount;
 
-            components.FaceMask.fillAmount = fillAmount;
-            components.FaceMask.rectTransform.localEulerAngles = Style.faceAngleOffset * Vector3.forward;
-            components.Face.rectTransform.localEulerAngles = Style.faceAngleOffset * Vector3.forward;
+            RedrawRimExtreme();
+
+            components.Mask.rectTransform.localEulerAngles = Style.faceAngleOffset * Vector3.forward;
+            // components.RimExtreme.rectTransform.localEulerAngles = Style.faceAngleLength * Vector3.forward;
 
             RedrawPointer(CurrentValue);
         }
         private void RedrawPointer(float percent)
         {
+            var rotationPercent = CalculateRotationPercent(percent);
+
             components.Pointer.rectTransform.localEulerAngles = 
-                Vector3.forward * (Style.faceAngleLength * percent + Style.faceAngleOffset);
+                Vector3.forward * (Style.faceAngleLength * rotationPercent + Style.faceAngleOffset);
+
+            if (Style.pointerMatchValueColor)
+            {
+                components.Pointer.color = percent > ExtremeValuePercentage ?
+                    Style.rimExtremeColor : Style.rimColor;
+            }
         }
         
+        private void RedrawRimExtreme()
+        {
+            var rimExtremeFillAmount = (1 - ExtremeValuePercentage) * (Style.faceAngleLength / 360);
+            components.RimExtreme.fillAmount = rimExtremeFillAmount;
+        }
+
         #region Mark Redraw
 
         private void RedrawMarks()
@@ -174,7 +216,7 @@ namespace SimpleCar.GUI.View.Clock
             {
                 while(marks.Count < marksNeeded)
                 { 
-                    var markInstance = GameObject.Instantiate(components.MarkPrefab, components.Canvas.transform);
+                    var markInstance = GameObject.Instantiate(components.MarkPrefab, components.MarkTransform);
                     var markView = new ClockMarkView();
                     markView.Init(markInstance.transform, Style.markStyle);
                     marks.Add(markView);
@@ -189,13 +231,14 @@ namespace SimpleCar.GUI.View.Clock
                 RefreshMarkLength(i);
                 RefreshMarkVisibility(i);
                 RefreshMarkColor(i);
+                RefreshMarkTextSize(i);
             }
         }
         private void RefreshMarkValue(int index)
         {
             float percent = (index) / (marks.Count - 1f);
             var displayValue = percent * (MaxValue - MinValue);
-            var eulerZ = Style.faceAngleLength * percent + Style.faceAngleOffset;
+            var eulerZ = Style.faceAngleLength * CalculateRotationPercent(percent) + Style.faceAngleOffset;
             marks[index].Value = (eulerZ, displayValue);
         }
         private void RefreshMarkLength(int index)
@@ -208,10 +251,21 @@ namespace SimpleCar.GUI.View.Clock
         }
         private void RefreshMarkColor(int index)
         {
-            marks[index].UseExtremeColor = marks[index].Value.display > ExtremeValueLimit;
+            marks[index].UseExtremeColor = marks[index].Value.display > ValueRange * ExtremeValuePercentage;
+        }
+        private void RefreshMarkTextSize(int index)
+        {
+            // ToDo - Test only
+            var canvasHeight = components.Canvas.GetComponent<RectTransform>().rect.height;
+            marks[index].TextSize = canvasHeight * Style.textSizeRatio;
         }
 
         #endregion
+
+        private float CalculateRotationPercent(float percent)
+        {
+            return Style.leftToRight ? 1 - percent: percent;
+        }
 
         #endregion
     }

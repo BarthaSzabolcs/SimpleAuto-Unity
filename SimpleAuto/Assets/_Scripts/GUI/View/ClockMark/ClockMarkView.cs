@@ -68,6 +68,10 @@ namespace SimpleCar.GUI.View.ClockMark
                 }
             }
         }
+        public float TextSize
+        {
+            get => textTMP.fontSize; set { textTMP.fontSize = value; }
+        }
 
         #endregion
         #region Backing Fields
@@ -92,7 +96,6 @@ namespace SimpleCar.GUI.View.ClockMark
         {
             markImage = transform.GetComponent<Image>();
             textTMP = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-
             Style = style;
         }
 
@@ -112,14 +115,35 @@ namespace SimpleCar.GUI.View.ClockMark
         {            
             markImage.rectTransform.localEulerAngles = Vector3.forward * Value.eulerZ;
 
-            RedrawText();
+            RedrawTextContent();
+            RedrawTextRotation();
+            RedrawTextPlacement();
             RedrawColor();
             RedrawSprite();
         }
-        private void RedrawText()
+        private void RedrawTextRotation()
+        {
+            switch (Style.rotation)
+            {
+                case ClockMarkRotation.Relative:
+                    textTMP.transform.localEulerAngles = Vector3.forward * Style.rotationOffset;
+                    break;
+
+                case ClockMarkRotation.Fixed:
+                    textTMP.transform.localEulerAngles = -markImage.rectTransform.localEulerAngles 
+                        + Vector3.forward * Style.rotationOffset;
+                    break;                    
+            }
+        }
+        private void RedrawTextContent()
         {
             var number = Style.roundValue ? Mathf.RoundToInt(Value.display) : Value.display;
             textTMP.text = number.ToString();
+        }
+        private void RedrawTextPlacement()
+        {
+            textTMP.rectTransform.anchorMin = Style.textRelativePosition;
+            textTMP.rectTransform.anchorMax = Style.textRelativePosition;
         }
         private void RedrawColor()
         {

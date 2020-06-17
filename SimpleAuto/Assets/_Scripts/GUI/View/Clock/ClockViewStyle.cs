@@ -8,16 +8,30 @@ namespace SimpleCar.GUI.View.Clock
     [CreateAssetMenu(fileName ="ClockStyle_", menuName = "View/Style/Clock")]
     public class ClockViewStyle : ScriptableObject
     {
-        // Face
-        public float faceAngleOffset;
-        public float faceAngleLength;
+        [Header("Overall")]
+        public bool leftToRight;
 
-        // Colors
+        [Header("Pointer")]
+        public Sprite pointer;
+        public Sprite pointerBase;
+        public bool pointerMatchValueColor;
         public Color pointerColor;
-        public Color faceColor;
+        public Color pointerBaseColor;
 
-        // Marks
+        [Header("Face")]
+        public Sprite rim;
+        public Sprite rimExtreme;
+        public Sprite mask;
+        public Color rimColor;
+        public Color rimExtremeColor;
+        public Color maskColor;
+        public bool showMask;
+        public float faceAngleLength;
+        public float faceAngleOffset;
+
+        [Header("Marks")]
         public ClockMarkViewStyle markStyle;
+        public float textSizeRatio;
         public int marksBetweenTheExtremes;
         public int longMarkFrequency;
         public bool showShortMarksValue;

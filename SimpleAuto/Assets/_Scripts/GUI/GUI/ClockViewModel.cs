@@ -61,7 +61,13 @@ namespace SimpleCar.GUI.ViewModel.Clock
         public void Init(ClockModel model, ClockViewStyle style)
         {
             Model = model;
-            view = new ClockView(requiredViewComponents, style);
+
+            view = new ClockView(
+                components: requiredViewComponents,
+                clockStyle: style,
+                minDisplayedValue: model.Min,
+                maxDisplayedValue: model.Max,
+                extremePercentage: model.ExtremeValueLimit);
         }
         private void SyncView(ClockModel model)
         {
@@ -79,16 +85,16 @@ namespace SimpleCar.GUI.ViewModel.Clock
                     view.CurrentValue = Model.Percent;
                     break;
   
-                case nameof(ClockModel.Min):
-                    view.CurrentValue = Model.Percent;
-                    break;
+                //case nameof(ClockModel.Min):
+                //    view.MinValue = Model.Min;
+                //    break;
 
-                case nameof(ClockModel.Max):
-                    view.CurrentValue = Model.Percent;
-                    break;
+                //case nameof(ClockModel.Max):
+                //    view.MaxValue = Model.Percent;
+                //    break;
 
                 case nameof(ClockModel.ExtremeValueLimit):
-                    view.ExtremeValueLimit = CalculateDisplayExtremeValue();
+                    view.ExtremeValuePercentage = CalculateDisplayExtremeValue();
                     break;
             }
         }

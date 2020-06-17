@@ -16,7 +16,7 @@ namespace SimpleCar.GUI.Model.Clock
             get => _min;
             set
             {
-                _min = Evaluate(_min, value);
+                Evaluate(ref _min, value);
             }
         }
         public float Max
@@ -24,7 +24,7 @@ namespace SimpleCar.GUI.Model.Clock
             get => _max;
             set
             {
-                _max = Evaluate(_max, value);
+                Evaluate(ref _max, value);
             }
         }
         public float ExtremeValueLimit
@@ -32,7 +32,7 @@ namespace SimpleCar.GUI.Model.Clock
             get => _extremeValueLimit;
             set
             {
-                _extremeValueLimit = Evaluate(_extremeValueLimit, value);
+                Evaluate(ref _extremeValueLimit, value);
             }
         }
         public float Value 
@@ -40,10 +40,11 @@ namespace SimpleCar.GUI.Model.Clock
             get => _value;
             set
             {
-                _value = Evaluate(_value, value);
+                Evaluate(ref _value, value);
             } 
         }
         public float Percent => _value / (_max - _min);
+        public float Range => _max - _min;
 
         #endregion
         #region Backing Fields
