@@ -115,10 +115,17 @@ namespace SimpleCar.GUI.View.ClockMark
         private void RedrawValue()
         {            
             markImage.rectTransform.localEulerAngles = Vector3.forward * Value.eulerZ;
-
-            RedrawTextContent();
-            RedrawTextRotation();
-            RedrawTextPlacement();
+            if (Style.showText && ShowValue)
+            {
+                textTMP.enabled = true;
+                RedrawTextContent();
+                RedrawTextRotation();
+                RedrawTextPlacement();
+            }
+            else
+            {
+                textTMP.enabled = false;
+            }
             RedrawColor();
             RedrawSprite();
         }

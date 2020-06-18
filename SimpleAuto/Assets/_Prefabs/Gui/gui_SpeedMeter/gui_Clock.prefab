@@ -85,10 +85,9 @@ GameObject:
   m_Component:
   - component: {fileID: 914257159918766558}
   - component: {fileID: 1768490863427213407}
-  - component: {fileID: 5980511096818390371}
   - component: {fileID: 6352206222130640941}
   m_Layer: 5
-  m_Name: Mask_image
+  m_Name: Face_image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,19 +121,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2740309525346188777}
   m_CullTransparentMesh: 0
---- !u!114 &5980511096818390371
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2740309525346188777}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShowMaskGraphic: 1
 --- !u!114 &6352206222130640941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,16 +137,16 @@ MonoBehaviour:
   m_Color: {r: 0.24313726, g: 0.24313726, b: 0.2509804, a: 0.54901963}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: -5866487224477779819, guid: 61ac51022df4dda469b62d8d8da044bb, type: 3}
-  m_Type: 3
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0.871
+  m_FillAmount: 1
   m_FillClockwise: 0
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
@@ -536,7 +522,7 @@ MonoBehaviour:
     _pointerBaseImage: {fileID: 6152018922732629219}
     _rimImage: {fileID: 7746557754276315640}
     _rimExtremeImage: {fileID: 2036805402783539768}
-    _maskImage: {fileID: 6352206222130640941}
+    _faceImage: {fileID: 6352206222130640941}
     _markPrefab: {fileID: 1942461230999260808, guid: b263902802432d24e893275e9746dd96, type: 3}
     _markTransform: {fileID: 1065190172502616808}
     _valueTMP: {fileID: 7760095441992946332}
@@ -602,17 +588,17 @@ MonoBehaviour:
   m_Color: {r: 0, g: 0.47843137, b: 0.8, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: -7966682703566852439, guid: 61ac51022df4dda469b62d8d8da044bb, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0
-  m_FillClockwise: 1
+  m_FillAmount: 0.87
+  m_FillClockwise: 0
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1

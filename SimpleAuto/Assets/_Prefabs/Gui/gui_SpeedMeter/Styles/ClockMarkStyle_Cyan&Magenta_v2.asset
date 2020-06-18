@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b85f3e763784bcf4482514d592505016, type: 3}
+  m_Name: ClockMarkStyle_Cyan&Magenta_v2
+  m_EditorClassIdentifier: 
+  shortSprite: {fileID: 21300000, guid: c10681e5884bff84f995ce5171f9af19, type: 3}
+  longSprite: {fileID: 21300000, guid: abdbd3bd8d25de0408f063e7f09d444e, type: 3}
+  extremeColor: {r: 0.79787236, g: 0.079787254, b: 1, a: 1}
+  normalColor: {r: 0.38805974, g: 1, b: 0.87562186, a: 1}
+  showText: 1
+  rotation: 1
+  rotationOffset: 45
+  decimalsRounded: 1
+  format: '{0:0.0}'
+  textRelativePosition: {x: 0.5, y: 0.825}

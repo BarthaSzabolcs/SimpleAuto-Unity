@@ -20,7 +20,8 @@ namespace Test.Gui
 
         [Header("View:")]
         [SerializeField] private ClockViewStyle[] styles;
-        [SerializeField] private string styleCycleKey;
+        [SerializeField] private string styleCycleForwardKey;
+        [SerializeField] private string styleCycleBackwardsKey;
 
         #endregion
         #region Private Properties
@@ -33,6 +34,10 @@ namespace Test.Gui
                 if (value >= styles.Length)
                 {
                     _styleIndex = 0;
+                }
+                else if(value < 0)
+                {
+                    _styleIndex = styles.Length - 1;
                 }
                 else
                 {
@@ -64,7 +69,7 @@ namespace Test.Gui
             {
                 Min = 0,
                 Max = 1,
-                ExtremeValueLimit = 0.75f
+                ExtremeValueLimit = 0.9f
             };
             foreach (var clock in speedClock)
             {
@@ -77,7 +82,7 @@ namespace Test.Gui
             {
                 Min = 0,
                 Max = 1,
-                ExtremeValueLimit = 0.85f
+                ExtremeValueLimit = 0.75f
             };
             foreach (var clock in rpmClock)
             {
@@ -86,8 +91,8 @@ namespace Test.Gui
             }
 
             // Cursor
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            //Cursor.lockState = CursorLockMode.None;
+            //Cursor.visible = true;
             
             carRigidbody = carController.GetComponent<Rigidbody>();
         }
@@ -98,17 +103,21 @@ namespace Test.Gui
             speedClockModel.Value = CalculateSpeedoMeterValue();
             rpmClockModel.Value = carController.Gas;
 
-            if (Input.GetKeyDown(styleCycleKey))
+            if (Input.GetKeyDown(styleCycleForwardKey))
             {
-                CycleStyles();
+                CycleStyles(1);
+            }
+            else if(Input.GetKeyDown(styleCycleBackwardsKey))
+            {
+                CycleStyles(-1);
             }
         }
 
         #endregion
         #region Private Methods
-        private void CycleStyles()
+        private void CycleStyles(int value)
         {
-            StyleIndex++;
+            StyleIndex += value;
             foreach (var clock in rpmClock)
             {
                 clock.Style = styles[StyleIndex];

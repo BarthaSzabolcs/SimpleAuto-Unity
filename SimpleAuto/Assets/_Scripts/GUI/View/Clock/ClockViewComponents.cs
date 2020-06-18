@@ -15,7 +15,7 @@ namespace SimpleCar.GUI.View.Clock
         [SerializeField] private Image _pointerBaseImage;
         [SerializeField] private Image _rimImage;
         [SerializeField] private Image _rimExtremeImage;
-        [SerializeField] private Image _maskImage;
+        [SerializeField] private Image _faceImage;
         [SerializeField] private GameObject _markPrefab;
         [SerializeField] private Transform _markTransform;
         [SerializeField] private TextMeshProUGUI _valueTMP;
@@ -29,7 +29,7 @@ namespace SimpleCar.GUI.View.Clock
         public Image PointerBase => _pointerBaseImage;
         public Image Rim => _rimImage;
         public Image RimExtreme => _rimExtremeImage;
-        public Image Mask => _maskImage;
+        public Image Face => _faceImage;
         public Transform MarkTransform => _markTransform;
         public TextMeshProUGUI CurrentValue => _valueTMP;
 

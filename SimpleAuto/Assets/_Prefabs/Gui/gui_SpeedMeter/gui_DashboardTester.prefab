@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9198901737217321490}
   - component: {fileID: 9198901737217321501}
   m_Layer: 0
-  m_Name: gui_TestSpeedoMeter
+  m_Name: gui_DashboardTester
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,20 +44,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 50
-  speedGauges:
-  - {fileID: 0}
-  - {fileID: 0}
-  rpmGauges:
-  - {fileID: 0}
-  - {fileID: 0}
+  speedClock: []
+  rpmClock: []
   carController: {fileID: 0}
-  percentage: 0
-  minValue: 0
-  maxValue: 8000
-  extremeValuePercentage: 0.85
-  overwriteViewSettings: 0
-  speedGaugeStyle: {fileID: 11400000, guid: 567f25ef8ba8cff4ca85d03c8d65b9bc, type: 2}
-  rpmGaugeStyle: {fileID: 11400000, guid: 75d050f1872a5b541ba4ca7794924ef7, type: 2}
-  minDisplayValue: 0
-  maxDisplayValue: 8
-  flip: 0
+  styles:
+  - {fileID: 11400000, guid: 157c81ed6545dea45828b4257e1e67f2, type: 2}
+  - {fileID: 11400000, guid: 539e4320e98ae3c469824c1b1741b2e2, type: 2}
+  - {fileID: 11400000, guid: 517f898d229401e4fbfd01d644f20d11, type: 2}
+  - {fileID: 11400000, guid: 567f25ef8ba8cff4ca85d03c8d65b9bc, type: 2}
+  - {fileID: 11400000, guid: 81d75a0bd80625149a1241eac85e164b, type: 2}
+  - {fileID: 11400000, guid: 0fc34b69fb57b9342b3471cd6b83be72, type: 2}
+  - {fileID: 11400000, guid: e160f5443c308b84ab38e173e5ea5b8d, type: 2}
+  styleCycleForwardKey: e
+  styleCycleBackwardsKey: q

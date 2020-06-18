@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9396be732a7fe84089fbd68539f1948, type: 3}
+  m_Name: ClockStyle_simple_Red&White
+  m_EditorClassIdentifier: 
+  ClockWise: 1
+  pointer: {fileID: 21300000, guid: 0981f332014498a498bdd0f2ec670fea, type: 3}
+  pointerBase: {fileID: 21300000, guid: 9e74ce7ad1ffcfa488bfae627e88f5a9, type: 3}
+  pointerMatchValueColor: 1
+  pointerColor: {r: 0.24313726, g: 0.24313726, b: 0.2509804, a: 0.88235295}
+  pointerBaseColor: {r: 0.1764706, g: 0.1764706, b: 0.1882353, a: 1}
+  rim: {fileID: 21300000, guid: 58a4d00ea28ab35439e83934b7860fa4, type: 3}
+  rimExtreme: {fileID: 21300000, guid: 390992bcca2ee044abdd57194dc41e51, type: 3}
+  face: {fileID: 21300000, guid: 83ac3d939e9af0044b2ba4fefff40d40, type: 3}
+  rimColor: {r: 1, g: 0.99819183, b: 0.8915094, a: 1}
+  rimExtremeColor: {r: 0.8980392, g: 0.078431375, b: 0, a: 1}
+  faceColor: {r: 0.20018598, g: 0.3354313, b: 0.553, a: 0.34901962}
+  showFace: 1
+  rimAngulareLength: 360
+  rimAngularOffset: 180
+  currentValueDrawBeforePointer: 1
+  currentValueShow: 1
+  currentValueSizeRatio: 0.2
+  currentValueDecimalsRounded: 0
+  currentValueFormat: '{0:0}'
+  currentValueOffset: {x: 0.5, y: 0.5}
+  currentValueColor: {r: 1, g: 1, b: 1, a: 1}
+  currentValueMatchValueColor: 1
+  markStyle: {fileID: 11400000, guid: 47f3c17c531c7fc4f9fc0da172fe9e33, type: 2}
+  markTextSizeRatio: 0.08
+  showExtremeValues: 0
+  extremeValuesAreLong: 1
+  marksBetweenTheExtremes: 6
+  longMarkFrequency: 1
+  showShortMarksValue: 0

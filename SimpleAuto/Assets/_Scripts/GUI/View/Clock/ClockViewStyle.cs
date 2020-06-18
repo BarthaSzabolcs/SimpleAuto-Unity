@@ -10,11 +10,11 @@ namespace SimpleCar.GUI.View.Clock
     {
         #region Public Properties
 
-        public float CorrectedFaceAngleOffset
+        public float CorrectedRimAngularOffset
         {
             get
             {
-                return ClockWise ? faceAngleOffset : -faceAngleOffset;
+                return ClockWise ? rimAngularOffset : -rimAngularOffset;
             }
         }
 
@@ -33,17 +33,18 @@ namespace SimpleCar.GUI.View.Clock
         [Header("Face")]
         public Sprite rim;
         public Sprite rimExtreme;
-        public Sprite mask;
+        public Sprite face;
         public Color rimColor;
         public Color rimExtremeColor;
-        public Color maskColor;
-        public bool showMask;
+        public Color faceColor;
+        public bool showFace;
         [Range(0, 360)] 
-        public float faceAngleLength;
+        public float rimAngulareLength;
         [Range(-360, 360)] 
-        public float faceAngleOffset;
+        public float rimAngularOffset;
 
         [Header("Current Value")]
+        public bool currentValueDrawBeforePointer;
         public bool currentValueShow;
         public float currentValueSizeRatio;
         [Range(0, 15)] 
@@ -56,6 +57,8 @@ namespace SimpleCar.GUI.View.Clock
         [Header("Marks")]
         public ClockMarkViewStyle markStyle;
         public float markTextSizeRatio;
+        public bool showExtremeValues;
+        public bool extremeValuesAreLong;
         [Range(0, 50)] 
         public int marksBetweenTheExtremes;
         public int longMarkFrequency;

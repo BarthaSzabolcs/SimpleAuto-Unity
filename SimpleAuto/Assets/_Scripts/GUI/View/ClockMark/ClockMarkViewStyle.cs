@@ -17,6 +17,7 @@ namespace SimpleCar.GUI.View.ClockMark
         public Color normalColor;
 
         // Text
+        public bool showText;
         public ClockMarkRotation rotation;
         [Range(0, 360)] 
         public float rotationOffset;

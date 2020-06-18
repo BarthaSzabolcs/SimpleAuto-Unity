@@ -148,14 +148,14 @@ namespace SimpleCar.GUI.View.Clock
         private void FullRedraw()
         {
             // Colors
-            components.Mask.color = Style.maskColor;
+            components.Face.color = Style.faceColor;
             components.Rim.color = Style.rimColor;
             components.RimExtreme.color = Style.rimExtremeColor;
             components.PointerBase.color = Style.pointerBaseColor;
             components.Pointer.color = Style.pointerColor;
 
             // Sprites
-            components.Mask.sprite = Style.mask;
+            components.Face.sprite = Style.face;
             components.Rim.sprite = Style.rim;
             components.RimExtreme.sprite = Style.rimExtreme;
             components.PointerBase.sprite = Style.pointerBase;
@@ -170,11 +170,11 @@ namespace SimpleCar.GUI.View.Clock
 
         private void FullRedrawFace()
         {
-            var fillAmount = Style.faceAngleLength / 360;
-            components.Mask.fillAmount = fillAmount;
+            var fillAmount = Style.rimAngulareLength / 360;
+            components.Rim.fillAmount = fillAmount;
 
-            float offSet = Style.CorrectedFaceAngleOffset;  
-            components.Mask.rectTransform.localEulerAngles = offSet * Vector3.forward;
+            float offSet = Style.CorrectedRimAngularOffset;  
+            components.Rim.rectTransform.localEulerAngles = offSet * Vector3.forward;
 
             RedrawRimExtreme();
             RedrawPointer(CurrentValue);
@@ -184,7 +184,7 @@ namespace SimpleCar.GUI.View.Clock
             var rotationPercent = CalculateRotationPercent(percent);
 
             components.Pointer.rectTransform.localEulerAngles = 
-                Vector3.forward * (Style.faceAngleLength * rotationPercent + Style.CorrectedFaceAngleOffset);
+                Vector3.forward * (Style.rimAngulareLength * rotationPercent + Style.CorrectedRimAngularOffset);
 
             if (Style.pointerMatchValueColor)
             {
@@ -194,11 +194,11 @@ namespace SimpleCar.GUI.View.Clock
         }
         private void RedrawRimExtreme()
         {
-            var rimExtremeFillAmount = (1 - ExtremeValuePercentage) * (Style.faceAngleLength / 360);
+            var rimExtremeFillAmount = (1 - ExtremeValuePercentage) * (Style.rimAngulareLength / 360);
             components.RimExtreme.fillAmount = rimExtremeFillAmount;
             components.RimExtreme.fillClockwise = !Style.ClockWise;
             
-            var offset = components.RimExtreme.fillClockwise ? Style.faceAngleLength : 0;
+            var offset = components.RimExtreme.fillClockwise ? Style.rimAngulareLength : 0;
             components.RimExtreme.rectTransform.localEulerAngles = Vector3.forward * offset;
         }
         
@@ -255,16 +255,31 @@ namespace SimpleCar.GUI.View.Clock
         {
             float percent = (index) / (marks.Count - 1f);
             var displayValue = percent * (MaxValue - MinValue);
-            var eulerZ = Style.faceAngleLength * CalculateRotationPercent(percent) + Style.CorrectedFaceAngleOffset/*Style.faceAngleOffset*/;
+            var eulerZ = Style.rimAngulareLength * CalculateRotationPercent(percent) + Style.CorrectedRimAngularOffset/*Style.faceAngleOffset*/;
             marks[index].Value = (eulerZ, displayValue);
         }
         private void RefreshMarkLength(int index)
         {
-            marks[index].Long = index % Style.longMarkFrequency == 0;
+            if ((index + 1) % Style.longMarkFrequency == 0 || 
+                (Style.extremeValuesAreLong && (index == 0 || index == marks.Count -1)))
+            {
+                marks[index].Long = true;
+            }
+            else
+            {
+                marks[index].Long = false;
+            }
         }
         private void RefreshMarkVisibility(int index)
         {
-            marks[index].ShowValue = marks[index].Long || Style.showShortMarksValue;
+            if ((index == 0 || index == marks.Count - 1) && Style.showExtremeValues == false)
+            {
+                marks[index].ShowValue = false;
+            }
+            else
+            {
+                marks[index].ShowValue = marks[index].Long || Style.showShortMarksValue;
+            }
         }
         private void RefreshMarkColor(int index)
         {
@@ -290,6 +305,12 @@ namespace SimpleCar.GUI.View.Clock
 
                 var canvasHeight = components.Canvas.GetComponent<RectTransform>().rect.height;
                 components.CurrentValue.fontSize = Style.currentValueSizeRatio * canvasHeight;
+
+                components.CurrentValue.color = Style.currentValueMatchValueColor ? 
+                    Style.rimColor : Style.currentValueColor;
+
+                var siblingIndex = Style.currentValueDrawBeforePointer ? 2 : 1;
+                components.CurrentValue.transform.SetSiblingIndex(siblingIndex);
 
                 RedrawCurrentValue();
             }
